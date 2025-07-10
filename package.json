@@ -1,0 +1,17 @@
+{
+  "name": "RogueLikeJS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "yukgeunmu <36117247+yukgeunmu@users.noreply.github.com>",
+  "license": "MIT",
+  "type": "module",
+"scripts": {
+  "format": "prettier --write *.js **/*.js"
+},
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
