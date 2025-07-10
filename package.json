@@ -5,11 +5,14 @@
   "author": "yukgeunmu <36117247+yukgeunmu@users.noreply.github.com>",
   "license": "MIT",
   "type": "module",
-"scripts": {
-  "format": "prettier --write *.js **/*.js"
-},
+  "scripts": {
+    "format": "prettier --write *.js **/*.js"
+  },
   "dependencies": {
-    "express": "^5.1.0"
+    "chalk": "^5.4.1",
+    "express": "^5.1.0",
+    "figlet": "^1.8.1",
+    "readline-sync": "^1.4.10"
   },
   "devDependencies": {
     "prettier": "^3.6.2"
