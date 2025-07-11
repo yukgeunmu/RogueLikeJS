@@ -7,6 +7,8 @@ import {
   DefenceMode,
   DoubleAttack,
 } from './BattleLogic.js/Battle.js';
+import { LevelUp } from './Reward/Reward.js';
+
 
 function displayStatus(stage, player, monster) {
   console.log(chalk.magentaBright(`\n=== Current Status ===`));
@@ -78,7 +80,7 @@ export async function startGame() {
       console.log(chalk.green(`플레이어가 승리하였습니다.`));
       console.log(chalk.gray('계속 진행하려면 엔터를 누르세요.'));
       const choice = readlineSync.question('');
-      player.hp = 100;
+      LevelUp(player, stage);
       stage++;
     }
   }

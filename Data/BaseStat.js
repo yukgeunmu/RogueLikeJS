@@ -38,6 +38,6 @@ export class BaseStat {
 
   set Agility(value) {
     if (value >= 80) this._Agility = 80;
-    else this._Agility = math;
+    else this._Agility = value;
   }
 }

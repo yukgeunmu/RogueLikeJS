@@ -4,7 +4,7 @@ export class Stage {
     
   monsterSelect(number) {
  
-    let randomInit = parseInt(Math.random() * 100) + 1;
+    let randomInit = parseInt(Math.random() * 9) + 1;
     let monsterHp = 100 + (number - 1) * randomInit;
     let monsterDamage = 5 +(number - 1) * randomInit;
     let monsterDefence = 1 + (number - 1) * randomInit;
