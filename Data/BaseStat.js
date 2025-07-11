@@ -1,9 +1,18 @@
 export class BaseStat {
   constructor(hp, damage, defence, Agility) {
     this._hp = hp;
+    this._maxHp = hp;
     this._damage = damage;
     this._defence = defence;
     this._Agility = Agility;
+  }
+
+  get maxHp(){
+    return this._maxHp;
+  }
+
+  set maxHp(value){
+    this._maxHp = value;
   }
 
   get hp() {
