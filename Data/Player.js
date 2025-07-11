@@ -1,17 +1,24 @@
-import { BaseStat } from "./BaseStat.js";
+import { BaseStat } from './BaseStat.js';
 import chalk from 'chalk';
+import { Monster } from './Monster.js';
 
 export class Player extends BaseStat {
 
-  attacked(value) {
+  takeDamage(value) {
+    let calculateDamge = value - this._defence;
+
+    let resultDamage = calculateDamge <= 0 ? 0 : calculateDamge;
+
     let randomInit = parseInt(Math.random() * 100) + 1;
 
-    if (randomInit <= 70) {
-      return chalk.green(`플레이어가 회피하였습니다.(남은체력: ${this._hp})`);
+    if (randomInit < this._Agility) {
+      return chalk.magenta(
+        `몬스터의 공격을 회피했습니다.(남은체력: ${this._hp})`
+      );
     } else {
-      this._hp = this._hp - value;
-      return chalk.red(
-        `플레이어가 ${value}의 데미지를 받았습니다.(남은체력: ${this._hp})`
+      this._hp -= resultDamage;
+      return chalk.magenta(
+        `플레이어가 ${resultDamage}의 데미지를 받았습니다.(남은체력: ${this._hp})`
       );
     }
   }
