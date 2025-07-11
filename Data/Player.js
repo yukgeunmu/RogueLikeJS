@@ -1,6 +1,5 @@
 import { BaseStat } from './BaseStat.js';
 import chalk from 'chalk';
-import { Monster } from './Monster.js';
 
 export class Player extends BaseStat {
 

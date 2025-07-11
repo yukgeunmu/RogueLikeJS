@@ -1,49 +1,87 @@
-class Player {
-  constructor(hp, damage) {
-    this._hp = hp;
-    this._damage = damage;
-  }
+import { achievementType } from './Enum/Enums.js';
 
-  get hp() {
-    return this._hp;
-  }
+const achievements = [
+  {
+    id: 1,
+    name: '사냥꾼의 길',
+    description: '몬스터 10마리 처치',
+    type: 'kill_monster',
+    target: 10,
+  },
+  {
+    id: 2,
+    name: '용감한 자',
+    description: '스테이지 5 도달',
+    type: 'reach_stage',
+    target: 5,
+  },
+  {
+    id: 3,
+    name: '끝에 도달한 자',
+    description: '스테이지 10 도달',
+    type: 'reach_stage',
+    target: 10,
+  },
+  {
+    id: 4,
+    name: '몬스터 학살자',
+    description: '몬스터 100마리 처지',
+    type: 'kill_monster',
+    target: 100,
+  },
+  {
+    id: 5,
+    name: '첫 사냥꾼',
+    description: '몬스터 1마리 처지',
+    type: 'kill_monster',
+    target: 1,
+  },
+  {
+    id: 6,
+    name: '초보 모험가',
+    description: '스테이지 1 클리어',
+    type: 'reach_stage',
+    target: 100,
+  },
+  {
+    id: 7,
+    name: '죽음의 맛',
+    description: '첫 사망 경험',
+    type: 'death_count',
+    target: 1,
+  },
+  {
+    id: 8,
+    name: '불굴의 정신',
+    description: '사망 후 10번 도전',
+    type: 'revive_count',
+    target: 100,
+  },
+];
 
-  set hp(value) {
-    if (value <= 0) this._hp = 0;
-    else this._hp = value;
-  }
+const count = {
+  [achievementType.kill]: 0,
+  [achievementType.reach]: 0,
+  [achievementType.death]: 0,
+  [achievementType.revive]: 0,
+};
 
-  get damage(){
-    return this._damage;
-  }
+export function Count(type) {
+  
+  if(type in count)
+    count[type]++;
 
-  attacked(value) {
-    this._hp = this._hp - value;
+  for (const achievement of achievements) {
+    if (
+      achievement.type === type &&
+      achievement.target === count[type] &&
+      achievement.isTrue === true
+    ) {
+      achievement.isTrue = true;
+    }
   }
 }
 
-class Monster {
-  constructor(stage, hp, damage) {
-    this.hp = hp * stage;
-    this.damage = damage * stage;
-  }
+Count(achievementType.reach)
 
-  get hp() {
-    return this._hp;
-  }
-
-  set hp(value) {
-    if (value <= 0) this._hp = 0;
-    else this._hp = value;
-  }
-
-  attacked(value) {
-    this._hp = this._hp - value;
-  }
-}
-
-const player1 = new Player(100,5);
-const monster1 = new  Monster(1,100,2.5);
-
-monster1.attacked(player1.damage)
-console.log(monster1.hp);
+console.log(count[achievementType.reach]);

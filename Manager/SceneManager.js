@@ -3,12 +3,13 @@ import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import { startGame } from '../game.js';
 import { Battle } from '../BattleLogic/Battle.js';
+import { achievements, AchievementCount} from '../Achievement/AchievementList.js';
+import { achievementType } from '../Enum/Enums.js';
 
 export class SceneManager {
   // 로비 화면을 출력하는 함수
   static displayLobby() {
     console.clear();
-
     // 타이틀 텍스트
     console.log(
       chalk.cyan(
@@ -45,24 +46,25 @@ export class SceneManager {
   }
 
   // 유저 입력을 받아 처리하는 함수
-  static handleUserInput() {
-    const choice = readlineSync.question('입력: ');
+  static async handleUserInput() {
+    console.log('입력:');
+    const choice = readlineSync.question();
 
     switch (choice) {
       case '1':
         console.log(chalk.green('게임을 시작합니다.'));
         // 여기에서 새로운 게임 시작 로직을 구현
-        startGame();
+        await startGame();
         break;
       case '2':
         console.log(chalk.yellow('구현 준비중입니다.. 게임을 시작하세요'));
         // 업적 확인하기 로직을 구현
-        handleUserInput();
+        achievement();
         break;
       case '3':
         console.log(chalk.blue('구현 준비중입니다.. 게임을 시작하세요'));
+        readlineSync.question();
         // 옵션 메뉴 로직을 구현
-        handleUserInput();
         break;
       case '4':
         console.log(chalk.red('게임을 종료합니다.'));
@@ -71,7 +73,6 @@ export class SceneManager {
         break;
       default:
         console.log(chalk.red('올바른 선택을 하세요.'));
-        handleUserInput(); // 유효하지 않은 입력일 경우 다시 입력 받음
     }
   }
 
@@ -93,7 +94,7 @@ export class SceneManager {
       const choice = readlineSync.question('');
 
       // 플레이어의 선택에 따라 다음 행동 처리
-      logs.push(chalk.green(`${choice}를 선택하셨습니다.`));
+      logs.push(chalk.blueBright(`${choice}를 선택하셨습니다.`));
 
       switch (choice) {
         case '1':
@@ -111,11 +112,17 @@ export class SceneManager {
           break;
       }
 
-      if (monster.hp <= 0) break;
+      if (monster.hp <= 0)
+      {
+        AchievementCount(achievementType.kill);
+        break;
+      } 
     }
   };
 }
 
+
+// 배틀 정보창
 function displayStatus(stage, player, monster) {
   console.log(chalk.magentaBright(`\n=== Current Status ===`));
   console.log(
@@ -128,4 +135,33 @@ function displayStatus(stage, player, monster) {
       )
   );
   console.log(chalk.magentaBright(`=====================\n`));
+}
+
+// 업적 씬
+function achievement() {
+  console.clear();
+  console.log(
+    chalk.cyan(
+      figlet.textSync('Achievement', {
+        font: 'Standard',
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+      })
+    )
+  );
+
+  // 상단 경계선
+  const line = chalk.magentaBright('='.repeat(50));
+  console.log(line);
+
+  for (let i = 0; i < achievements.length; i++) {
+    if (achievements[i].isTrue) {
+      console.log(chalk.green(`${achievements[i].name}: ${achievements[i].description}`));
+    } else {
+       console.log(chalk.gray(`${achievements[i].name}: ${achievements[i].description}`));
+    }
+  }
+
+  console.log(chalk.green('아무키나 누르면 뒤로 갑니다.'));
+  const choice = readlineSync.question();
 }
