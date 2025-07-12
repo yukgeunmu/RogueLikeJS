@@ -1,4 +1,5 @@
 import { achievementType } from './Enum/Enums.js';
+import { promises as fs } from 'fs';
 
 const achievements = [
   {
@@ -59,7 +60,7 @@ const achievements = [
   },
 ];
 
-const count = {
+let count = {
   [achievementType.kill]: 0,
   [achievementType.reach]: 0,
   [achievementType.death]: 0,
@@ -82,6 +83,12 @@ export function Count(type) {
   }
 }
 
-Count(achievementType.reach)
+const dataCount = await fs.readFile('./Achivement/saveCount.json','utf-8');
+ let loadData2 = JSON.parse(dataCount);
 
-console.log(count[achievementType.reach]);
+console.log(dataCount);
+
+console.log(count);
+
+Object.assign(count, loadData2);
+console.log(count);

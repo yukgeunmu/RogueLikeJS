@@ -2,13 +2,13 @@ import { Monster } from './Monster.js';
 
 export class Stage {
     
-  monsterSelect(number) {
+  monsterSelect(stage) {
  
-    let randomInit = parseInt(Math.random() * 9) + 1;
-    let monsterHp = 100 + (number - 1) * randomInit;
-    let monsterDamage = 5 +(number - 1) * randomInit;
-    let monsterDefence = 1 + (number - 1) * randomInit;
-    let monserAgile = (number - 1) * randomInit;
+    let randomInit = parseInt(Math.random() * 9) + stage;
+    let monsterHp = 100*stage + (stage - 1) + randomInit;
+    let monsterDamage = 5 +(stage - 1) + randomInit + 10;
+    let monsterDefence = 1 + (stage - 1) + randomInit;
+    let monserAgile = (stage - 1) + randomInit;
 
     return new Monster(monsterHp, monsterDamage, monsterDefence, monserAgile);
   }

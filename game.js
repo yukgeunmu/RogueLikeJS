@@ -4,7 +4,7 @@ import { Player } from './Data/Player.js';
 import { Stage } from './Data/Stage.js';
 import { LevelUp } from './Reward/Reward.js';
 import { SceneManager} from './Manager/SceneManager.js';
-import { AchievementCount } from './Achievement/AchievementList.js';
+import { AchievementCount } from './Achivement/AchivementList.js';
 import { achievementType } from './Enum/Enums.js';
 
 export async function startGame() {
