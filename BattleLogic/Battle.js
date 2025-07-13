@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 
-
 export class Battle {
   // 기본공격 로직
   BasicAttack(player, monster, logs) {
@@ -13,7 +12,7 @@ export class Battle {
   DoubleAttack(player, monster, logs) {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
-    if (randomInit < 25) {
+    if (randomInit <= 25) {
       logs.push(chalk.green('연속 공격에 성공하였습니다.'));
       logs.push(monster.takeDamage(player.damage * 2));
       logs.push(player.takeDamage(monster.damage));
@@ -30,7 +29,7 @@ export class Battle {
   DefenceMode(player, monster, logs) {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
-    if (randomInit < 55) {
+    if (randomInit <= 55) {
       logs.push(chalk.green('방어에 성공하였습니다.'));
       logs.push(player.takeDamage(0));
     } else {
@@ -39,5 +38,12 @@ export class Battle {
     }
 
     return logs;
+  }
+
+  // 도망
+  Run() {
+    let randomInit = parseInt(Math.random() * 100) + 1;
+
+    return randomInit;
   }
 }

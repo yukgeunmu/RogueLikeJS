@@ -3,10 +3,7 @@ import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import { startGame } from '../game.js';
 import { Battle } from '../BattleLogic/Battle.js';
-import {
-  achievements,
-  AchievementCount,
-} from '../Achivement/AchivementList.js';
+import { achievements } from '../Achivement/AchivementList.js';
 import { achievementType } from '../Enum/Enums.js';
 import { Save, Load } from '../SaveLoad.js';
 
@@ -61,12 +58,10 @@ export class SceneManager {
         await startGame();
         break;
       case '2':
-        console.log(chalk.yellow('구현 준비중입니다.. 게임을 시작하세요'));
         // 업적 확인하기 로직을 구현
         displayAchievement();
         break;
       case '3':
-        console.log(chalk.blue('구현 준비중입니다.. 게임을 시작하세요'));
         displayOption();
         await handleUserInputOption();
         break;
@@ -92,7 +87,9 @@ export class SceneManager {
       logs.forEach((log) => console.log(log));
 
       console.log(
-        chalk.green(`\n1. 공격한다 2. 도망친다. 3.연속 공격, 4. 방어`)
+        chalk.green(
+          `\n1. 공격한다 2. 도망친다.(5%) 3.연속 공격(25%), 4. 방어(55%)`
+        )
       );
       console.log(chalk.green(`당신의 선택은?`));
       const choice = readlineSync.question('');
@@ -105,9 +102,16 @@ export class SceneManager {
           BattleSelect.BasicAttack(player, monster, logs);
           break;
         case '2':
-          logs.push(chalk.green('도망쳤습니다.'));
-          player.hp -= 10;
-          return;
+          let randomInit = BattleSelect.Run();
+          if (randomInit <= 5) {
+            console.log(chalk.green('도망치는데 성공했습니다.'));
+            readlineSync.question();
+            return;
+          } else {
+            logs.push(chalk.red('도망에 실패하였습니다.'));
+            logs.push(player.takeDamage(monster.damage));
+            break;
+          }
         case '3':
           BattleSelect.DoubleAttack(player, monster, logs);
           break;
