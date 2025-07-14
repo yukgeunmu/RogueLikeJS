@@ -49,11 +49,13 @@ router.patch('/achivement/:id', async (req, res) => {
     return res.status(404).json({ erroMessage: '존재하지 않는 업적입니다.' });
   }
 
+
   currentState.progress = progress;
 
   if (currentState.target <= currentState.progress) {
     currentState.isTrue = true;
   }
+  else currentState.isTrue = false;
 
   await currentState.save();
 

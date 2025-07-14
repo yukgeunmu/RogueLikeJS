@@ -1,15 +1,15 @@
 import chalk from 'chalk';
 
-export class Battle {
+export class BattleManager {
   // 기본공격 로직
-  BasicAttack(player, monster, logs) {
+  static BasicAttack(player, monster, logs) {
     logs.push(monster.takeDamage(player.damage));
     logs.push(player.takeDamage(monster.damage));
     return logs;
   }
 
   // 연속 공격 로직
-  DoubleAttack(player, monster, logs) {
+  static DoubleAttack(player, monster, logs) {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
     if (randomInit <= 25) {
@@ -26,7 +26,7 @@ export class Battle {
   }
 
   // 방어 로직
-  DefenceMode(player, monster, logs) {
+  static DefenceMode(player, monster, logs) {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
     if (randomInit <= 55) {
@@ -41,9 +41,9 @@ export class Battle {
   }
 
   // 도망
-  Run() {
+  static Run() {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
-    return randomInit;
+    return randomInit;        
   }
 }

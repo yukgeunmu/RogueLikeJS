@@ -1,11 +1,10 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
-import { Player } from './Data/Player.js';
-import { Stage } from './Data/Stage.js';
-import { LevelUp } from './Reward/Reward.js';
-import { SceneManager} from './Manager/SceneManager.js';
-import { AchievementCount } from './Achivement/AchivementList.js';
-import { achievementType } from './Enum/Enums.js';
+import { Player } from './Game/Data/Player.js';
+import { Stage } from './Game/Data/Stage.js';
+import { InputManager } from './Game/Manager/InputManager.js';
+import { AchievementCount } from './Game/Achivement/AchivementList.js';
+import { achievementType } from './Game/Enum/Enums.js';
 
 export async function startGame() {
   console.clear();
@@ -15,7 +14,7 @@ export async function startGame() {
 
   while (stage <= 10) {
     const monster = monserSelect.monsterSelect(stage);
-    await SceneManager.battle(stage, player, monster);
+    await InputManager.battleUserInput(stage, player, monster);
 
     // 스테이지 클리어 및 게임 종료 조건
     if (player.hp <= 0 && monster.hp > 0) {
@@ -29,7 +28,7 @@ export async function startGame() {
       AchievementCount(achievementType.reach);
       console.log(chalk.green(`플레이어가 승리하였습니다.`));
       console.log(chalk.gray('계속 진행하려면 엔터를 누르세요.'));
-      LevelUp(player, stage);
+      player.LevelUp(stage);
       readlineSync.question('');
       stage++;
     }

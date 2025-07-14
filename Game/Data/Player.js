@@ -21,4 +21,14 @@ export class Player extends BaseStat {
       );
     }
   }
+
+  LevelUp(stage) {
+  
+    this._maxHp = this._maxHp + (stage - 1) + 10;
+    this._damage = this._damage + (stage - 1) + 10;
+    this._defence = this._defence + (stage - 1) + 1;
+    this._Agility = this._Agility + (stage - 1) + 1;
+  
+    this._hp = this._maxHp;
+  }
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import startServer from './app.js';
-import { achievements, LoadData } from './Achivement/AchivementList.js';
+import { achievements, LoadData } from '../Game/Achivement/AchivementList.js';
 
 export async function createAchivement(achivement) {
   try {

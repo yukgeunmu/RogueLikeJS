@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 
-const data = await fs.readFile('./Achivement/achivement.json', 'utf-8');
+const data = await fs.readFile('./Game/Achivement/achivement.json', 'utf-8');
 export const achievements = JSON.parse(data);
 
 export function AchievementCount(type) {

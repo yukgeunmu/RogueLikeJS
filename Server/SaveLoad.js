@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { achievements, LoadData } from './Achivement/AchivementList.js';
+import { achievements, LoadData } from '../Game/Achivement/AchivementList.js';
 import startServer from './app.js';
 import {
   createAchivement,
@@ -58,13 +58,12 @@ export async function DeleteSave(){
   try{
     const server = await startServer();
 
-    for (let i = 0; i < achievements.length; i++) {
-      await deleteAchievement(achievements[i]);
-    }
+    const reset = [...achievements];
 
-    for(let i =0; i < achievements.length; i++)
+    for(let i = 0; i < reset.length; i++)
     {
-      await createAchivement(achievements[i]);
+      reset[i].progress = 0;
+      await updateAchivement(reset[i]);
     }
 
     console.log('삭제 완료');

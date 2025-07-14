@@ -1,6 +1,6 @@
 import express from 'express';
-import achivementRouter from './routes/achivementRoute.js';
-import connect from './schemas/index.js';
+import achivementRouter from '../routes/achivementRoute.js';
+import connect from '../schemas/index.js';
 
 const startServer = () => {
   return new Promise(async (resolve, reject) => {
