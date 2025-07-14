@@ -43,7 +43,17 @@ export class BattleManager {
   // 도망
   static Run() {
     let randomInit = parseInt(Math.random() * 100) + 1;
+    let string;
+    let isRun = false;
 
-    return randomInit;        
+    if (randomInit <= 5) {
+      string = '도망치는데 성공했습니다.';
+      isRun =true;
+    } else {
+      string = '도망에 실패하였습니다.';
+
+    }
+
+    return [string, isRun];
   }
 }

@@ -40,12 +40,17 @@ export class InputManager {
   // 배틀 씬
   static async battleUserInput(stage, player, monster) {
     let logs = [];
+    let isResult = false;
 
     while (player.hp > 0) {
       console.clear();
       SceneManager.displayStatus(stage, player, monster);
 
-      logs.forEach((log) => console.log(log));
+      if (isResult) {
+        logs.forEach((log) => console.log(log));
+        await sleep(1000);
+        return;
+      } else logs.forEach((log) => console.log(log));
 
       console.log(
         chalk.green(
@@ -56,28 +61,32 @@ export class InputManager {
       const choice = readlineSync.question('');
 
       // 플레이어의 선택에 따라 다음 행동 처리
-      logs.push(chalk.blueBright(`${choice}를 선택하셨습니다.`));
+      if (parseInt(choice) >= 1 && parseInt(choice) <= 4) {
+        logs.push(chalk.blueBright(`${choice}를 선택하셨습니다.`));
+      }
 
       switch (choice) {
         case '1':
           BattleManager.BasicAttack(player, monster, logs);
           break;
         case '2':
-          let randomInit = BattleManager.Run();
-          if (randomInit <= 5) {
-            console.log(chalk.green('도망치는데 성공했습니다.'));
-            readlineSync.question();
-            return;
+          let [str, isRun] = BattleManager.Run();
+          if (isRun) {
+            isResult = isRun;
+            logs.push(chalk.green(str));
           } else {
-            logs.push(chalk.red('도망에 실패하였습니다.'));
+            logs.push(chalk.red(str));
             logs.push(player.takeDamage(monster.damage));
-            break;
           }
+          break;
         case '3':
           BattleManager.DoubleAttack(player, monster, logs);
           break;
         case '4':
           BattleManager.DefenceMode(player, monster, logs);
+          break;
+        default:
+          logs.push(chalk.red('올바른 선택을 하세요.'));
           break;
       }
 
@@ -113,6 +122,11 @@ export class InputManager {
         return;
       default:
         console.log(chalk.red('올바른 선택을 하세요.'));
+        break;
     }
   }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
