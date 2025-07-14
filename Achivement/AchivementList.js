@@ -1,8 +1,7 @@
 import fs from 'fs/promises';
-import { achievementType } from '../Enum/Enums.js';
 
 const data = await fs.readFile('./Achivement/achivement.json', 'utf-8');
-export let achievements = JSON.parse(data);
+export const achievements = JSON.parse(data);
 
 export function AchievementCount(type) {
   for (const achievement of achievements) {
@@ -19,5 +18,7 @@ export function AchievementCount(type) {
 }
 
 export function LoadData(data) {
-  achievements = data;
+  
+  achievements.splice(0,achievements.length, ...data);
 }
+

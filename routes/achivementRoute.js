@@ -1,5 +1,4 @@
 import express from 'express';
-import Achivement from '../schemas/achivementsDB.js';
 import achivementsDB from '../schemas/achivementsDB.js';
 
 const router = express.Router();
@@ -11,53 +10,64 @@ const router = express.Router();
 // });
 
 router.post('/achivement', async (req, res, next) => {
-  const { id, name, description, type, target, isTrue } = req.body;
+  const { id, name, description, type, target, isTrue, progress } = req.body;
 
-  const achivements = await Achivement.find({ id }).exec();
+  const achivements = await achivementsDB.find({ id }).exec();
   if (achivements.length) {
     return res
       .status(400)
       .json({ success: false, erroMessage: '이미 존재하는 데이터입니다.' });
   }
 
-  const createAchivement = await Achivement.create({
+  const createAchivement = await achivementsDB.create({
     id,
     name,
     description,
     type,
     target,
     isTrue,
+    progress,
   });
 
   return res.status(201).json({ achivements: createAchivement });
 });
 
 router.get('/achivement', async (req, res, next) => {
-  const list = await Achivement.find().sort('-id').exec();
+  const list = await achivementsDB.find().sort('id').exec();
 
   return res.status(200).json({ list });
 });
 
 router.patch('/achivement/:id', async (req, res) => {
-  const { id } = req.params;
+  const id = parseInt(req.params.id, 10);
 
-  const { isTrue } = req.body;
+  const { progress } = req.body;
 
-  const currentState = await Achivement.findById(id).exec();
+  const currentState = await achivementsDB.findOne({ id }).exec();
 
   if (!currentState) {
     return res.status(404).json({ erroMessage: '존재하지 않는 업적입니다.' });
   }
+
+  currentState.progress = progress;
+
+  if (currentState.target <= currentState.progress) {
+    currentState.isTrue = true;
+  }
+
+  await currentState.save();
+
+  return res.status(200).json({});
 });
 
 router.delete('/achivement/:id', async (req, res) => {
   const id = parseInt(req.params.id, 10);
-  const deleteAchive = await achivementsDB.findOne({id}).exec();
+  const deleteAchive = await achivementsDB.findOne({ id }).exec();
   if (!deleteAchive) {
-    return res.status(404).json({ erroMessage: '존재하지 안흔 데이터입니다.' });
+    return res.status(404).json({ erroMessage: '존재하지 않는 데이터입니다.' });
   }
 
-  await achivementsDB.deleteOne({id}).exec();
+  await achivementsDB.deleteOne({ id }).exec();
 
   return res.status(200).json({});
 });

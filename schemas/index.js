@@ -2,8 +2,8 @@
 
 import mongoose from 'mongoose';
 
-const connect = () => {
-  mongoose
+const connect = async () => {
+  await mongoose
     .connect(
       'mongodb+srv://ygm:sdsd0615@cluster0.kyecccq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
       {

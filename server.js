@@ -1,5 +1,5 @@
 import { SceneManager } from './Manager/SceneManager.js';
-import startServer from './app.js';
+
 
 
 

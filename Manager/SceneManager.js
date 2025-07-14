@@ -3,9 +3,12 @@ import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import { startGame } from '../game.js';
 import { Battle } from '../BattleLogic/Battle.js';
-import { achievements } from '../Achivement/AchivementList.js';
+import {
+  achievements,
+  AchievementCount,
+} from '../Achivement/AchivementList.js';
 import { achievementType } from '../Enum/Enums.js';
-import { Save, Load } from '../SaveLoad.js';
+import { Save, Load, DeleteSave } from '../SaveLoad.js';
 
 export class SceneManager {
   // 로비 화면을 출력하는 함수
@@ -199,7 +202,8 @@ function displayOption() {
   // 옵션들
   console.log(chalk.blue('1.') + chalk.white(' 저장하기'));
   console.log(chalk.blue('2.') + chalk.white(' 불러오기'));
-  console.log(chalk.blue('3.') + chalk.white(' 나가기'));
+  console.log(chalk.blue('3.') + chalk.white('삭제하기'));
+  console.log(chalk.blue('4.') + chalk.white(' 나가기'));
 }
 
 async function handleUserInputOption() {
@@ -218,6 +222,11 @@ async function handleUserInputOption() {
       readlineSync.question();
       break;
     case '3':
+      console.log(chalk.blue('세이브 데이터를 삭제 합니다.'));
+      await DeleteSave();
+      readlineSync.question();
+      break;
+    case '4':
       console.log(chalk.blue('로비로 나갑니다'));
       return;
     default:
