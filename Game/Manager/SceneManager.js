@@ -2,6 +2,8 @@ import chalk from 'chalk';
 import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import { achievements } from '../Achivement/AchivementList.js';
+import { rewordType } from '../Enum/Enums.js';
+import { BattleManager } from './BattleManager.js';
 
 export class SceneManager {
   // 로비 화면을 출력하는 함수
@@ -43,18 +45,24 @@ export class SceneManager {
   }
 
   // 배틀 정보창
-  static displayStatus(stage, player, monster) {
+  static displayStatus(stage, player, monsters) {
     console.log(chalk.magentaBright(`\n=== Current Status ===`));
     console.log(
       chalk.cyanBright(`| Stage: ${stage} `) +
         chalk.blueBright(
-          `| 플레이어 정보 체력: ${player.hp}, 공격력: ${player.damage} 방어력: ${player.defence} `
-        ) +
-        chalk.redBright(
-          `| 몬스터 정보 체력: ${monster.hp}, 공격력: ${monster.damage} 방어력: ${monster.defence} |`
+          `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} `
         )
     );
     console.log(chalk.magentaBright(`=====================\n`));
+
+    for (let i = 0; i < monsters.length; i++) {
+      const name = `<${monsters[i].name}>`.padEnd(10);
+      const hp = `HP: ${monsters[i].hp}`.padEnd(10);
+      const dmg = `DMG: ${monsters[i].damage}`.padEnd(10);
+      const def = `DFS: ${monsters[i].defence}`.padEnd(10);
+
+      console.log(chalk.redBright(`${name} | ${hp} ${dmg} ${def} |`));
+    }
   }
 
   // 업적 씬
@@ -113,7 +121,91 @@ export class SceneManager {
     // 옵션들
     console.log(chalk.blue('1.') + chalk.white(' 저장하기'));
     console.log(chalk.blue('2.') + chalk.white(' 불러오기'));
-    console.log(chalk.blue('3.') + chalk.white('삭제하기'));
+    console.log(chalk.blue('3.') + chalk.white(' 삭제하기'));
     console.log(chalk.blue('4.') + chalk.white(' 나가기'));
   }
+
+  // 승리 후 보상 창
+  static displayReward(stage) {
+    console.clear();
+
+    console.log(chalk.green('보상을 선택해주세요.'));
+    console.log();
+
+    // 옵션들
+    let randomhp = parseInt(Math.random() * 50) + stage;
+    let randomDamage = parseInt(Math.random() * 9) + stage;
+    let randomDefence = parseInt(Math.random() * 9) + stage;
+    let randomAgility = parseInt(Math.random() * 9) + stage;
+
+    let total = {
+      hp: randomhp,
+      damage: randomDamage,
+      defence: randomDefence,
+      agility: randomAgility,
+    };
+
+    console.log(
+      chalk.blue('1.') + chalk.white(`${rewordType.health} +${randomhp}`)
+    );
+    console.log(
+      chalk.blue('2.') + chalk.white(`${rewordType.damage} +${randomDamage}`)
+    );
+    console.log(
+      chalk.blue('3.') + chalk.white(`${rewordType.defenece} +${randomDefence}`)
+    );
+    console.log(
+      chalk.blue('4.') + chalk.white(`${rewordType.agility} +${randomAgility}`)
+    );
+
+    // 하단 경계선
+    const line = chalk.magentaBright('='.repeat(50));
+    console.log(line);
+
+    // 하단 설명
+    console.log(chalk.gray('1-4 사이의 수를 입력한 뒤 엔터를 누르세요.'));
+
+    return total;
+  }
+
+  // 공격할 몬스터 선택
+  static displaySelectMonster(player,monsters) {
+    console.clear();
+    console.log(chalk.magentaBright(`\n=== Current Status ===`));
+    console.log(
+      chalk.blueBright(
+        `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} `
+      )
+    );
+    console.log(chalk.magentaBright(`=====================\n`));
+
+    console.log(chalk.green('몬스터를 선택해주세요.'));
+    console.log();
+
+    for (let i = 0; i < monsters.length; i++) {
+      const name = `<${monsters[i].name}>`.padEnd(10);
+      const hp = `HP: ${monsters[i].hp}`.padEnd(10);
+      const dmg = `DMG: ${monsters[i].damage}`.padEnd(10);
+      const def = `DFS: ${monsters[i].defence}`.padEnd(10);
+
+      console.log(
+        chalk.redBright(`[${i + 1}] ${name} | ${hp} ${dmg} ${def} |`)
+      );
+    }
+
+    // 하단 경계선
+    const line = chalk.magentaBright('='.repeat(50));
+    console.log(line);
+
+    // 하단 설명
+    console.log(
+      chalk.gray(`1-${monsters.length} 사이의 수를 입력한 뒤 엔터를 누르세요.`)
+    );
+  }
+
+  // 플레이어 배틀 결과 창
+  static displayBattleResultPlayer(player, monster) {}
+
+  // 몬스터 배틀 결과 창
+  static displayBattleResultMonster(player, monster) {}
 }

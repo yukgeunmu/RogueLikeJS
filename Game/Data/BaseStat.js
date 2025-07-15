@@ -1,10 +1,10 @@
 export class BaseStat {
-  constructor(hp, damage, defence, Agility) {
+  constructor(hp, maxHp, damage, defence, agility) {
     this._hp = hp;
-    this._maxHp = hp;
+    this._maxHp = maxHp;
     this._damage = damage;
     this._defence = defence;
-    this._Agility = Agility;
+    this._agility = agility;
   }
 
   get maxHp(){
@@ -42,11 +42,11 @@ export class BaseStat {
   }
 
   get Agility() {
-    return this._Agility;
+    return this._agility;
   }
 
   set Agility(value) {
-    if (value >= 80) this._Agility = 80;
-    else this._Agility = value;
+    if (value >= 80) this._agility = 80;
+    else this._agility = value;
   }
 }

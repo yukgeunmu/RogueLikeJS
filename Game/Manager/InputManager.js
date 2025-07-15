@@ -35,30 +35,32 @@ export class InputManager {
         break;
       default:
         console.log(chalk.red('올바른 선택을 하세요.'));
+        break;
     }
   }
-  // 배틀 씬
-  static async battleUserInput(stage, player, monster) {
+  // 배틀 인풋
+  static async battleUserInput(stage, player, monsters) {
     let logs = [];
     let isResult = false;
 
     while (player.hp > 0) {
       console.clear();
-      SceneManager.displayStatus(stage, player, monster);
+      SceneManager.displayStatus(stage, player, monsters);
 
       if (isResult) {
         logs.forEach((log) => console.log(log));
-        await sleep(1000);
+        await sleep(2000);
         return;
       } else logs.forEach((log) => console.log(log));
 
       console.log(
         chalk.green(
-          `\n1. 공격한다 2. 도망친다.(5%) 3.연속 공격(25%), 4. 방어(55%)`
+          `\n1. 공격한다 2. 도망친다.(5%) 3.연속 공격(25%), 4. 스킬`
         )
       );
       console.log(chalk.green(`당신의 선택은?`));
       const choice = readlineSync.question('');
+      logs.length = 0;
 
       // 플레이어의 선택에 따라 다음 행동 처리
       if (parseInt(choice) >= 1 && parseInt(choice) <= 4) {
@@ -67,7 +69,7 @@ export class InputManager {
 
       switch (choice) {
         case '1':
-          BattleManager.BasicAttack(player, monster, logs);
+          BattleManager.BasicAttack(player, monsters, logs);
           break;
         case '2':
           let [str, isRun] = BattleManager.Run();
@@ -76,22 +78,30 @@ export class InputManager {
             logs.push(chalk.green(str));
           } else {
             logs.push(chalk.red(str));
-            logs.push(player.takeDamage(monster.damage));
+            for (let i = 0; i < monsters.length; i++) {
+              logs.push(player.takeDamage(monsters[i]));
+            }
           }
           break;
         case '3':
-          BattleManager.DoubleAttack(player, monster, logs);
+          BattleManager.DoubleAttack(player, monsters, logs);
           break;
         case '4':
-          BattleManager.DefenceMode(player, monster, logs);
+          BattleManager.DefenceMode(player, monsters, logs);
           break;
         default:
           logs.push(chalk.red('올바른 선택을 하세요.'));
           break;
       }
 
-      if (monster.hp <= 0) {
-        AchievementCount(achievementType.kill);
+      for (let i = monsters.length - 1; i >= 0; i--) {
+        if (monsters[i].hp <= 0) {
+          monsters.splice(i, 1);
+          AchievementCount(achievementType.kill);
+        }
+      }
+
+      if (monsters.length <= 0) {
         break;
       }
     }
@@ -125,8 +135,34 @@ export class InputManager {
         break;
     }
   }
+
+  static async rewardUserInput(player, total) {
+    console.log('입력:');
+
+    while (true) {
+      const choice = readlineSync.question();
+
+      switch (choice) {
+        case '1':
+          player.maxHp += total.hp;
+          return console.log(chalk.green('체력이 상승했습니다.'));
+        case '2':
+          player.damage += total.damage;
+          return console.log(chalk.green('공격력이 상승했습니다.'));
+        case '3':
+          player.defence += total.defence;
+          return console.log(chalk.green('방어력이 상승했습니다.'));
+        case '4':
+          player.agility += total.agility;
+          return console.log(chalk.green('회피율이 상승했습니다.'));
+        default:
+          console.log(chalk.red('올바른 선택을 하세요.'));
+          break;
+      }
+    }
+  }
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

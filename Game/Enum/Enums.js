@@ -4,3 +4,10 @@ export const achievementType = Object.freeze({
   death: 'death_count',
   revive: 'revive_count',
 });
+
+export const rewordType = Object.freeze({
+  health: '체력',
+  damage: '공격력',
+  defenece: '방어력',
+  agility: '민첩',
+});

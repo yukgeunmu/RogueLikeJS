@@ -1,15 +1,31 @@
 import { Monster } from './Monster.js';
 
 export class Stage {
-    
   monsterSelect(stage) {
- 
-    let randomInit = parseInt(Math.random() * 9) + stage;
-    let monsterHp = 100*stage + (stage - 1) + randomInit;
-    let monsterDamage = 5 +(stage - 1) + randomInit + 2;
-    let monsterDefence = 1 + (stage - 1) + randomInit;
-    let monserAgile = (stage - 1) + randomInit;
+    const name = ['Orc', 'Goblin', 'Skeleton', 'Orge'];
+    let monsters = [];
 
-    return new Monster(monsterHp, monsterDamage, monsterDefence, monserAgile);
+    let randomCount = parseInt(Math.random() * 4)+1;
+
+    for (let i = 0; i < randomCount; i++) {
+      let randomName = parseInt(Math.random() * 3);
+      let randomInit = parseInt(Math.random() * 9) + stage;
+      let monsterHp = 10 * stage + (stage - 1) + randomInit;
+      let monsterDamage = 5 + (stage - 1) + randomInit + 2;
+      let monsterDefence = 1 + (stage - 1) + randomInit;
+      let monserAgile = stage - 1 + randomInit;
+
+      let newMonster = new Monster(
+        name[randomName],
+        monsterHp,
+        monsterDamage,
+        monsterDefence,
+        monserAgile
+      );
+
+      monsters.push(newMonster);
+    }
+
+    return monsters;
   }
 }
