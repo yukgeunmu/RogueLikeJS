@@ -3,6 +3,12 @@ import chalk from 'chalk';
 
 export class Player extends BaseStat {
 
+  constructor(hp, maxHp, damage, defence, agility){
+    super(hp, maxHp, damage, defence, agility);
+    this.buffs= [];
+  }
+
+
   takeDamage(monster) {
     let calculateDamge = monster.damage - this._defence;
 
@@ -34,6 +40,11 @@ export class Player extends BaseStat {
 
   InitHP(){
     this.hp = this.maxHp;
+  }
+
+  
+  useSkill(skill, target){
+    skill.execute(this, target);
   }
 
 

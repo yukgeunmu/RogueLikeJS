@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import { SceneManager } from './SceneManager.js';
-
+import { Skill } from '../Data/Skill.js';
 
 export class BattleManager {
   // 기본공격 로직
@@ -11,7 +11,7 @@ export class BattleManager {
     console.log(chalk.green(`당신의 선택은?`));
     const choice = readlineSync.question('');
 
-    let selectedMonster = monsters[choice-1];
+    let selectedMonster = monsters[choice - 1];
 
     if (!selectedMonster) {
       logs.push(chalk.red('올바른 선택을 하세요.'));
@@ -21,7 +21,7 @@ export class BattleManager {
     logs.push(selectedMonster.takeDamage(player.damage));
 
     for (let i = 1; i <= monsters.length; i++) {
-      logs.push(player.takeDamage(monsters[i-1]));
+      logs.push(player.takeDamage(monsters[i - 1]));
     }
 
     return logs;
@@ -29,7 +29,6 @@ export class BattleManager {
 
   // 연속 공격 로직
   static DoubleAttack(player, monsters, logs) {
-    
     let randomInit = parseInt(Math.random() * 100) + 1;
 
     if (randomInit <= 25) {
@@ -46,6 +45,24 @@ export class BattleManager {
     }
 
     return logs;
+  }
+
+  // 스킬 로직
+  static SkillUse(player, monsters, skills, logs) {
+    SceneManager.displaySkillList(skills);
+
+    console.log(chalk.green(`당신의 선택은?`));
+    const choice = readlineSync.question('');
+
+    let seletedSkill = skills[choice - 1];
+
+    if (!seletedSkill) {
+      logs.push(chalk.red('올바른 선택을 하세요.'));
+      return logs;
+    }
+
+
+
   }
 
   // 방어 로직

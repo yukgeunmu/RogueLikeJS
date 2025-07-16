@@ -6,6 +6,7 @@ import { achievementType } from '../Enum/Enums.js';
 import { Save, Load, DeleteSave } from '../../Server/SaveLoad.js';
 import { SceneManager } from './SceneManager.js';
 import { BattleManager } from './BattleManager.js';
+import { skills } from './SkillManager.js';
 
 export class InputManager {
   // 유저 입력을 받아 처리하는 함수
@@ -39,7 +40,7 @@ export class InputManager {
     }
   }
   // 배틀 인풋
-  static async battleUserInput(stage, player, monsters) {
+  static async battleUserInput(stage, player, monsters, skills) {
     let logs = [];
     let isResult = false;
 
@@ -55,7 +56,7 @@ export class InputManager {
 
       console.log(
         chalk.green(
-          `\n1. 공격한다 2. 도망친다.(5%) 3.연속 공격(25%), 4. 스킬`
+          `\n1. 공격한다 2. 도망친다.(5%) 3.연속 공격(25%), 4. 스킬사용`
         )
       );
       console.log(chalk.green(`당신의 선택은?`));
@@ -87,7 +88,7 @@ export class InputManager {
           BattleManager.DoubleAttack(player, monsters, logs);
           break;
         case '4':
-          BattleManager.DefenceMode(player, monsters, logs);
+          BattleManager.SkillUse(player,monsters,skills,logs);
           break;
         default:
           logs.push(chalk.red('올바른 선택을 하세요.'));
@@ -107,6 +108,7 @@ export class InputManager {
     }
   }
 
+  // 옵션 씬
   static async handleUserInputOption() {
     console.log('입력:');
     const choice = readlineSync.question();
@@ -136,6 +138,7 @@ export class InputManager {
     }
   }
 
+  // 보상 씬
   static async rewardUserInput(player, total) {
     console.log('입력:');
 

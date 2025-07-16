@@ -1,7 +1,23 @@
-import { Player } from "./Game/Data/Player.js";
+import { Player } from './Game/Data/Player.js';
 
-const player = new Player(100,100,10,5,5);
+class Animal {
+  constructor(name, type) {
+    this.name = name;
+    this.type = type;
+  }
 
-player.maxHp += 5;
+  Sound(a,b) {
+    throw new Error('execute() must be implemented');
+  }
+}
 
-console.log(player.maxHp);
+class Dog extends Animal {
+  Sound(a)
+  {
+      console.log(`${a}에게 왈왈`);
+  }
+}
+
+const dog1 = new Dog('돌돌이', '불독');
+
+ dog1.Sound('주인');

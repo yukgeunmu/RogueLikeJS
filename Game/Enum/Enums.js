@@ -5,9 +5,10 @@ export const achievementType = Object.freeze({
   revive: 'revive_count',
 });
 
-export const rewordType = Object.freeze({
+export const rewardType = Object.freeze({
   health: '체력',
   damage: '공격력',
   defenece: '방어력',
   agility: '민첩',
 });
+

@@ -22,7 +22,6 @@ export class Stage {
         monsterDefence,
         monserAgile
       );
-
       monsters.push(newMonster);
     }
 

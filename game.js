@@ -6,16 +6,18 @@ import { InputManager } from './Game/Manager/InputManager.js';
 import { AchievementCount } from './Game/Achivement/AchivementList.js';
 import { achievementType } from './Game/Enum/Enums.js';
 import { SceneManager } from './Game/Manager/SceneManager.js';
+import { SkillManager } from './Game/Manager/SkillManager.js';
 
 export async function startGame() {
   console.clear();
   const player = new Player(100, 100, 20, 5, 5);
+  const selectedSkill = SkillManager.skillSelect();
   const monserSelect = new Stage();
   let stage = 1;
 
   while (stage <= 100) {
     const monsters = monserSelect.monsterSelect(stage);
-    await InputManager.battleUserInput(stage, player, monsters);
+    await InputManager.battleUserInput(stage, player, monsters, selectedSkill);
 
     // 스테이지 클리어 및 게임 종료 조건
     console.clear();

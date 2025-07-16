@@ -1,0 +1,62 @@
+[
+  {
+    "id": "skill_001",
+    "name": "파워 슬래쉬",
+    "type": "attack",
+    "appliedStat": "damage",
+    "value": 100,
+    "duration": 0,
+    "maxUses": 2,
+    "description": "강력한 한방으로 적을 공격한다."
+  },
+  {
+    "id": 2,
+    "name": "퍼펙트 힐",
+    "type": "support",
+    "appliedStat": "health",
+    "value": 0,
+    "duration": 0,
+    "maxUses": 1,
+    "description": "전체 체력을 회복한다."
+  },
+  {
+    "id": 3,
+    "name": "스몰힐",
+    "type": "support",
+    "appliedStat": "health",
+    "value": 20,
+    "duration": 0,
+    "maxUses": 5,
+    "description": "적은 체력을 회복한다."
+  },
+  {
+    "id": 4,
+    "name": "철벽 방패",
+    "type": "buff",
+    "appliedStat": "defence",
+    "value": 10,
+    "duration": 3,
+    "maxUses": 5,
+    "description": "3턴간 방어력을 상승시킨다."
+  },
+  {
+    "id": 5,
+    "name": "퀵 스텝",
+    "type": "buff",
+    "appliedStat": "agility",
+    "value": 15,
+    "duration": 2,
+    "maxUses": 5,
+    "description": "2턴간 회피율을 상승시킨다."
+  },
+  {
+    "id": 6,
+    "name": "독 단검",
+    "type": "debuff",
+    "appliedStat": "damage",
+    "value": 5,
+    "duration": 2,
+    "maxUses": 5,
+    "description": "적에게 독 데미지를 준다"
+  }
+]

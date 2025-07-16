@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import { achievements } from '../Achivement/AchivementList.js';
-import { rewordType } from '../Enum/Enums.js';
+import { rewardType } from '../Enum/Enums.js';
 import { BattleManager } from './BattleManager.js';
 
 export class SceneManager {
@@ -146,16 +146,16 @@ export class SceneManager {
     };
 
     console.log(
-      chalk.blue('1.') + chalk.white(`${rewordType.health} +${randomhp}`)
+      chalk.blue('1.') + chalk.white(`${rewardType.health} +${randomhp}`)
     );
     console.log(
-      chalk.blue('2.') + chalk.white(`${rewordType.damage} +${randomDamage}`)
+      chalk.blue('2.') + chalk.white(`${rewardType.damage} +${randomDamage}`)
     );
     console.log(
-      chalk.blue('3.') + chalk.white(`${rewordType.defenece} +${randomDefence}`)
+      chalk.blue('3.') + chalk.white(`${rewardType.defenece} +${randomDefence}`)
     );
     console.log(
-      chalk.blue('4.') + chalk.white(`${rewordType.agility} +${randomAgility}`)
+      chalk.blue('4.') + chalk.white(`${rewardType.agility} +${randomAgility}`)
     );
 
     // 하단 경계선
@@ -169,7 +169,7 @@ export class SceneManager {
   }
 
   // 공격할 몬스터 선택
-  static displaySelectMonster(player,monsters) {
+  static displaySelectMonster(player, monsters) {
     console.clear();
     console.log(chalk.magentaBright(`\n=== Current Status ===`));
     console.log(
@@ -201,6 +201,32 @@ export class SceneManager {
     console.log(
       chalk.gray(`1-${monsters.length} 사이의 수를 입력한 뒤 엔터를 누르세요.`)
     );
+  }
+
+  // 사용할 스킬 선택
+  static displaySkillList(skills) {
+    console.clear();
+
+    const line = chalk.magentaBright('='.repeat(50));
+
+    console.log(chalk.green('스킬을 선택해주세요.'));
+    console.log();
+    console.log(line);
+    // 옵션들
+    for (let i = 0; i < skills.length; i++) {
+      console.log(
+        chalk.blue(`${i + 1}. `) +
+          chalk.white(`${skills[i].name}: ${skills[i].description}`) +
+          chalk.white(` (남은 횟수: ${skills[i].maxUses})`)
+      );
+    }
+    console.log(line);
+
+    // 하단 경계선
+
+    // 하단 설명
+    console.log(chalk.gray('1-4 사이의 수를 입력한 뒤 엔터를 누르세요.'));
+
   }
 
   // 플레이어 배틀 결과 창
