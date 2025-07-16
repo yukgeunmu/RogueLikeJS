@@ -2,12 +2,15 @@ import { BaseStat } from './BaseStat.js';
 import chalk from 'chalk';
 
 export class Player extends BaseStat {
-
-  constructor(hp, maxHp, damage, defence, agility){
-    super(hp, maxHp, damage, defence, agility);
-    this.buffs= [];
+  constructor(name, hp, maxHp, damage, defence, agility) {
+    super(name, hp, maxHp, damage, defence, agility);
+    this.buffs = [];
+    this.deBuffs = [];
+    this.curDefence = defence;
+    this.curDamage = damage;
+    this.curAgility = agility;
+    this.curMaxHp = maxHp;
   }
-
 
   takeDamage(monster) {
     let calculateDamge = monster.damage - this._defence;
@@ -29,23 +32,36 @@ export class Player extends BaseStat {
   }
 
   LevelUp(stage) {
-  
     this.maxHp = this._maxHp + (stage - 1) + 10;
     this._damage = this._damage + (stage - 1) + 10;
     this._defence = this._defence + (stage - 1) + 1;
     this._agility = this._agility + (stage - 1) + 1;
-  
+
     this._hp = this._maxHp;
   }
 
-  InitHP(){
+  InitData() {
     this.hp = this.maxHp;
+    this.buffs = [];
+    this.deBuffs = [];
+    this.damage = this.curDamage;
+    this.maxHp = this.curMaxHp;
+    this.defence = this.curDefence;
+    this.agility = this.curAgility;
   }
 
-  
-  useSkill(skill, target){
-    skill.execute(this, target);
+  startTurn() {}
+
+  endTurn(logs) {
+    if (this.buffs.length === 0) return;
+
+    for (let i = this.buffs.length - 1; i >= 0; i--) {
+      this.buffs[i].duration--;
+      if (this.buffs[i].duration <= 0) {
+        logs.push(this.buffs[i].usingSkill.remove(this, this.buffs[i].skillData));
+        this.buffs[i].duration = this.buffs[i].IntiDuration;
+        this.buffs.splice(i, 1);
+      }
+    }
   }
-
-
 }

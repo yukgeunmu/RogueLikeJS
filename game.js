@@ -10,14 +10,14 @@ import { SkillManager } from './Game/Manager/SkillManager.js';
 
 export async function startGame() {
   console.clear();
-  const player = new Player(100, 100, 20, 5, 5);
-  const selectedSkill = SkillManager.skillSelect();
+  const player = new Player('플레이어', 100, 100, 20, 5, 5);
+  const selectedSkills = SkillManager.skillSelect();
   const monserSelect = new Stage();
   let stage = 1;
 
   while (stage <= 100) {
     const monsters = monserSelect.monsterSelect(stage);
-    await InputManager.battleUserInput(stage, player, monsters, selectedSkill);
+    await InputManager.battleUserInput(stage, player, monsters, selectedSkills);
 
     // 스테이지 클리어 및 게임 종료 조건
     console.clear();
@@ -36,7 +36,7 @@ export async function startGame() {
       // player.LevelUp(stage);
       let totalStat = SceneManager.displayReward(stage);
       await InputManager.rewardUserInput(player, totalStat);
-      player.InitHP();
+      player.InitData();
       console.log(chalk.gray('계속 진행하려면 엔터를 누르세요.'));
       readlineSync.question('');
       stage++;

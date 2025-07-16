@@ -214,10 +214,15 @@ export class SceneManager {
     console.log(line);
     // 옵션들
     for (let i = 0; i < skills.length; i++) {
+
+      const skillname = `${skills[i].name}: `;
+      const skilldescription = `${skills[i].description}`;
+
       console.log(
         chalk.blue(`${i + 1}. `) +
-          chalk.white(`${skills[i].name}: ${skills[i].description}`) +
-          chalk.white(` (남은 횟수: ${skills[i].maxUses})`)
+          chalk.greenBright(`${skillname}`) +
+          chalk.white(`${skilldescription}`) +
+          chalk.blueBright(` (남은 횟수: ${skills[i].maxUses})`)
       );
     }
     console.log(line);

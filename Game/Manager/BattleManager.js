@@ -61,8 +61,40 @@ export class BattleManager {
       return logs;
     }
 
+    if (seletedSkill.type === 'support') {
+      logs.push(seletedSkill.useSkill(player, player));
+      return logs;
+    }
 
+    if (seletedSkill.type === 'buff') {
+      logs.push(seletedSkill.useSkill(player, player));
+      
+      for (let i = 1; i <= monsters.length; i++) {
+        logs.push(player.takeDamage(monsters[i - 1]));
+      }
+      return logs;
+    }
 
+    //대상 몬스터 선택
+    console.clear();
+    SceneManager.displaySelectMonster(player, monsters);
+    console.log(chalk.green(`당신의 선택은?`));
+    const choice2 = readlineSync.question('');
+
+    let selectedMonster = monsters[choice2 - 1];
+
+    if (!selectedMonster) {
+      logs.push(chalk.red('올바른 선택을 하세요.'));
+      return logs;
+    }
+
+    logs.push(seletedSkill.useSkill(player, selectedMonster));
+
+    for (let i = 1; i <= monsters.length; i++) {
+      logs.push(player.takeDamage(monsters[i - 1]));
+    }
+
+    return logs;
   }
 
   // 방어 로직

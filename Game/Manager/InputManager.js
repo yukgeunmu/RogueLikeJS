@@ -6,7 +6,6 @@ import { achievementType } from '../Enum/Enums.js';
 import { Save, Load, DeleteSave } from '../../Server/SaveLoad.js';
 import { SceneManager } from './SceneManager.js';
 import { BattleManager } from './BattleManager.js';
-import { skills } from './SkillManager.js';
 
 export class InputManager {
   // 유저 입력을 받아 처리하는 함수
@@ -88,11 +87,17 @@ export class InputManager {
           BattleManager.DoubleAttack(player, monsters, logs);
           break;
         case '4':
-          BattleManager.SkillUse(player,monsters,skills,logs);
+          BattleManager.SkillUse(player, monsters, skills, logs);
           break;
         default:
           logs.push(chalk.red('올바른 선택을 하세요.'));
           break;
+      }
+
+      player.endTurn(logs);
+
+      for (let i = 0; i < monsters.length; i++) {
+        monsters[i].endTurn(logs);
       }
 
       for (let i = monsters.length - 1; i >= 0; i--) {
@@ -148,15 +153,19 @@ export class InputManager {
       switch (choice) {
         case '1':
           player.maxHp += total.hp;
+          player.curMaxHp = player.maxHp;
           return console.log(chalk.green('체력이 상승했습니다.'));
         case '2':
           player.damage += total.damage;
+          player.curDamage = player.damage;
           return console.log(chalk.green('공격력이 상승했습니다.'));
         case '3':
           player.defence += total.defence;
+          player.curDefence = player.defence;
           return console.log(chalk.green('방어력이 상승했습니다.'));
         case '4':
           player.agility += total.agility;
+          player.curAgility = player.agility;
           return console.log(chalk.green('회피율이 상승했습니다.'));
         default:
           console.log(chalk.red('올바른 선택을 하세요.'));

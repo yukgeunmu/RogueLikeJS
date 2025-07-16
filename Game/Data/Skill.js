@@ -1,29 +1,46 @@
+import chalk from 'chalk';
+import { skillStrategies } from '../SkillList/SkillStrategies.js';
+
 export class Skill {
-  constructor(
-    id,
-    name,
-    type,
-    appliedStat,
-    skillValue,
-    duration,
-    maxUses,
-    description
-  ) {
-    this._id = id;
-    this._name = name;
-    this._type = type;
-    this._appliedStat = appliedStat;
-    this._skillValue = skillValue;
-    this._duration = duration;
-    this._maxUses = maxUses;
-    this._description = description;
+  constructor(data) {
+    this._id = data.id;
+    this._name = data.name;
+    this._type = data.type;
+    this._classType = data.classType;
+    this._baseValue = data.baseValue;
+    this._duration = data.duration;
+    this._maxUses = data.maxUses;
+    this._description = data.description;
+    this.InitDuration = data.duration;
+
+    const SkillClass = skillStrategies[this._classType];
+
+    if (!SkillClass) {
+      console.error(
+        `Error: Unknown strategy type for skill ${this._name}: ${this._classType}`
+      );
+    } else {
+      this.usingSkill = new SkillClass();
+    }
+
+    this.skillData = {
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      classType: this.classType,
+      baseValue: this.baseValue,
+      duration: this.duration,
+      maxUses: this.maxUses,
+      description: this.description,
+    };
+
   }
 
   get id() {
-    return this_id;
+    return this._id;
   }
   set id(value) {
-    this_id = value;
+    this._id = value;
   }
 
   get name() {
@@ -37,15 +54,15 @@ export class Skill {
     return this._type;
   }
 
-  get appliedStat() {
-    return this._appliedStat;
+  get classType() {
+    return this._classType;
   }
 
-  get skillValue() {
-    return this._skillValue;
+  get baseValue() {
+    return this._baseValue;
   }
-  set skillValue(value) {
-    this._skillValue = value;
+  set baseValue(value) {
+    this._baseValue = value;
   }
 
   get duration() {
@@ -69,7 +86,23 @@ export class Skill {
     this._description = value;
   }
 
-  execute(caster, target) {
-    throw new Error('execute() must be implemented');
+  useSkill(caster, target) {
+    if(this.maxUses <= 0) return chalk.red(`사용횟수를 초과하였습니다.`);
+    
+    let log = this.usingSkill.execute(caster, target, this.skillData);
+    this.maxUses--;
+
+    switch(this.type){
+      case 'buff':
+        caster.buffs.push(this);
+        break;
+      case 'debuff':
+        target.deBuffs.push(this);
+        break;
+      default:
+        break;
+    }
+
+    return log;
   }
 }
