@@ -58,7 +58,7 @@ export class Player extends BaseStat {
     for (let i = this.buffs.length - 1; i >= 0; i--) {
       this.buffs[i].duration--;
       if (this.buffs[i].duration <= 0) {
-        logs.push(this.buffs[i].usingSkill.remove(this, this.buffs[i].skillData));
+        logs.push(this.buffs[i].usingSkill.remove(this, this.buffs[i]));
         this.buffs[i].duration = this.buffs[i].IntiDuration;
         this.buffs.splice(i, 1);
       }

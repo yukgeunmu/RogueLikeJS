@@ -3,7 +3,6 @@ import figlet from 'figlet';
 import readlineSync from 'readline-sync';
 import { achievements } from '../Achivement/AchivementList.js';
 import { rewardType } from '../Enum/Enums.js';
-import { BattleManager } from './BattleManager.js';
 
 export class SceneManager {
   // 로비 화면을 출력하는 함수
@@ -50,7 +49,7 @@ export class SceneManager {
     console.log(
       chalk.cyanBright(`| Stage: ${stage} `) +
         chalk.blueBright(
-          `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} `
+          `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} AGI: ${player.agility} |`
         )
     );
     console.log(chalk.magentaBright(`=====================\n`));
@@ -126,17 +125,20 @@ export class SceneManager {
   }
 
   // 승리 후 보상 창
-  static displayReward(stage) {
+  static displayReward(player, stage) {
     console.clear();
+    console.log(chalk.magentaBright(`\n=== Current Status ===`));
+    SceneManager.displayPlayerStatus(player);
+    console.log(chalk.magentaBright(`=====================\n`));
 
     console.log(chalk.green('보상을 선택해주세요.'));
     console.log();
 
     // 옵션들
     let randomhp = parseInt(Math.random() * 50) + stage;
-    let randomDamage = parseInt(Math.random() * 9) + stage;
-    let randomDefence = parseInt(Math.random() * 9) + stage;
-    let randomAgility = parseInt(Math.random() * 9) + stage;
+    let randomDamage = parseInt(Math.random() * 10) + stage;
+    let randomDefence = parseInt(Math.random() * 10) + stage;
+    let randomAgility = parseInt(Math.random() * 10) + stage;
 
     let total = {
       hp: randomhp,
@@ -172,11 +174,7 @@ export class SceneManager {
   static displaySelectMonster(player, monsters) {
     console.clear();
     console.log(chalk.magentaBright(`\n=== Current Status ===`));
-    console.log(
-      chalk.blueBright(
-        `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} `
-      )
-    );
+    SceneManager.displayPlayerStatus(player);
     console.log(chalk.magentaBright(`=====================\n`));
 
     console.log(chalk.green('몬스터를 선택해주세요.'));
@@ -201,6 +199,7 @@ export class SceneManager {
     console.log(
       chalk.gray(`1-${monsters.length} 사이의 수를 입력한 뒤 엔터를 누르세요.`)
     );
+    console.log(chalk.gray('0을 입력하면 뒤로 나갑니다.'));
   }
 
   // 사용할 스킬 선택
@@ -214,7 +213,6 @@ export class SceneManager {
     console.log(line);
     // 옵션들
     for (let i = 0; i < skills.length; i++) {
-
       const skillname = `${skills[i].name}: `;
       const skilldescription = `${skills[i].description}`;
 
@@ -231,12 +229,64 @@ export class SceneManager {
 
     // 하단 설명
     console.log(chalk.gray('1-4 사이의 수를 입력한 뒤 엔터를 누르세요.'));
+    console.log(chalk.gray('0을 입력하면 뒤로 나갑니다.'));
+  }
 
+  // 플레이어 상태창
+  static displayPlayerStatus(player) {
+    console.log(
+      chalk.blueBright(
+        `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} AGI: ${player.agility} |`
+      )
+    );
   }
 
   // 플레이어 배틀 결과 창
-  static displayBattleResultPlayer(player, monster) {}
+  static displayBattleResultPlayer(player, stage, dieMonsters) {
+    console.clear();
+    console.log(chalk.green('승리하였습니다.'));
+    console.log(
+      chalk.blueBright(`클리어 스테이지: `) + chalk.green(`Stage ${stage}`)
+    );
+    let nexStage = stage + 1;
+    console.log(
+      chalk.blueBright(`다음 스테이지: `) +
+        chalk.yellowBright(`Stage ${nexStage}`)
+    );
+    console.log(`남은 스테이지: ${99 - stage}`);
+    console.log(chalk.greenBright(`남은 체력: ${player.hp}`));
+    console.log(chalk.magentaBright(`======== 처치한 몬스터 ========`));
+    console.log(
+      chalk.blue('고블린: ') + chalk.yellowBright(dieMonsters['Goblin'])
+    );
+    console.log(
+      chalk.blue('스켈레톤: ') + chalk.yellowBright(dieMonsters['Skeleton'])
+    );
+    console.log(chalk.blue('오크: ') + chalk.yellowBright(dieMonsters['Orc']));
+    console.log(
+      chalk.blue('오우거: ') + chalk.yellowBright(dieMonsters['Orge'])
+    );
+    console.log(chalk.magentaBright(`=============================`));
+  }
 
-  // 몬스터 배틀 결과 창
-  static displayBattleResultMonster(player, monster) {}
+  static displayDefeat(stage, dieMonsters) {
+    console.clear();
+    console.log(chalk.red('사망하였습니다.'));
+    console.log(
+      chalk.blueBright(`도달한 스테이지: `) + chalk.green(`Stage ${stage}`)
+    );
+    console.log(`남은 스테이지: ${99 - stage}`);
+    console.log(chalk.magentaBright(`======== 처치한 몬스터 ========`));
+    console.log(
+      chalk.blue('고블린: ') + chalk.yellowBright(dieMonsters['Goblin'])
+    );
+    console.log(
+      chalk.blue('스켈레톤: ') + chalk.yellowBright(dieMonsters['Skeleton'])
+    );
+    console.log(chalk.blue('오크: ') + chalk.yellowBright(dieMonsters['Orc']));
+    console.log(
+      chalk.blue('오우거: ') + chalk.yellowBright(dieMonsters['Orge'])
+    );
+    console.log(chalk.magentaBright(`=============================`));
+  }
 }

@@ -34,9 +34,9 @@ export class Monster extends BaseStat {
 
     for (let i = this.deBuffs.length - 1; i >= 0; i--) {
       this.deBuffs[i].duration--;
-      logs.push(this.deBuffs[i].usingSkill.apply(this,this.deBuffs[i].skillData));
+      logs.push(this.deBuffs[i].usingSkill.apply(this,this.deBuffs[i]));
       if (this.deBuffs[i].duration <= 0) {
-        this.deBuffs[i].usingSkill.remove(this, this.deBuffs[i].skillData);
+        this.deBuffs[i].usingSkill.remove(this, this.deBuffs[i]);
         this.deBuffs[i].duration = this.deBuffs[i].IntiDuration;
         this.deBuffs.splice(i, 1);
       }

@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import { SceneManager } from './SceneManager.js';
-import { Skill } from '../Data/Skill.js';
 
 export class BattleManager {
   // 기본공격 로직
@@ -49,26 +48,38 @@ export class BattleManager {
 
   // 스킬 로직
   static SkillUse(player, monsters, skills, logs) {
-    SceneManager.displaySkillList(skills);
+    logs.length = 0;
+    let selectedSkill;
 
-    console.log(chalk.green(`당신의 선택은?`));
-    const choice = readlineSync.question('');
+    while (true) {
+      SceneManager.displaySkillList(skills);
+      logs.forEach((log) => console.log(log));
 
-    let seletedSkill = skills[choice - 1];
+      console.log(chalk.green(`당신의 선택은?`));
+      const choice = readlineSync.question('');
 
-    if (!seletedSkill) {
-      logs.push(chalk.red('올바른 선택을 하세요.'));
-      return logs;
+      if (parseInt(choice) >= 1 && parseInt(choice) <= skills.length) {
+        selectedSkill = skills[choice - 1];
+
+        if(selectedSkill.maxUses <= 0){
+          logs.length = 0;
+          logs.push(chalk.red(`${selectedSkill.name}의 사용횟수를 초과하였습니다.`));
+        } else break;
+      }
+
+      if (parseInt(choice) === 0) {
+        return;
+      }
+
+      if (!selectedSkill) {
+        logs.length = 0;
+        logs.push(chalk.red('올바른 선택을 하세요.'));
+      }
     }
 
-    if (seletedSkill.type === 'support') {
-      logs.push(seletedSkill.useSkill(player, player));
-      return logs;
-    }
+    if (selectedSkill.type === 'support' || selectedSkill.type === 'buff') {
+      logs.push(selectedSkill.useSkill(player, player));
 
-    if (seletedSkill.type === 'buff') {
-      logs.push(seletedSkill.useSkill(player, player));
-      
       for (let i = 1; i <= monsters.length; i++) {
         logs.push(player.takeDamage(monsters[i - 1]));
       }
@@ -76,40 +87,32 @@ export class BattleManager {
     }
 
     //대상 몬스터 선택
-    console.clear();
-    SceneManager.displaySelectMonster(player, monsters);
-    console.log(chalk.green(`당신의 선택은?`));
-    const choice2 = readlineSync.question('');
+    while (true) {
+      SceneManager.displaySelectMonster(player, monsters);
+      logs.forEach((log) => console.log(log));
 
-    let selectedMonster = monsters[choice2 - 1];
+      console.log(chalk.green(`당신의 선택은?`));
+      const choice2 = readlineSync.question('');
 
-    if (!selectedMonster) {
-      logs.push(chalk.red('올바른 선택을 하세요.'));
-      return logs;
+      let selectedMonster = monsters[choice2 - 1];
+
+      if (parseInt(choice2) >= 1 && parseInt(choice2) <= monsters.length) {
+        logs.push(selectedSkill.useSkill(player, selectedMonster));
+        for (let i = 1; i <= monsters.length; i++) {
+          logs.push(player.takeDamage(monsters[i - 1]));
+        }
+        return logs;
+      }
+
+      if (parseInt(choice2) === 0) {
+        return;
+      }
+
+      if (!selectedMonster) {
+        logs.length = 0;
+        logs.push(chalk.red('올바른 선택을 하세요.'));
+      }
     }
-
-    logs.push(seletedSkill.useSkill(player, selectedMonster));
-
-    for (let i = 1; i <= monsters.length; i++) {
-      logs.push(player.takeDamage(monsters[i - 1]));
-    }
-
-    return logs;
-  }
-
-  // 방어 로직
-  static DefenceMode(player, monster, logs) {
-    let randomInit = parseInt(Math.random() * 100) + 1;
-
-    if (randomInit <= 55) {
-      logs.push(chalk.green('방어에 성공하였습니다.'));
-      logs.push(player.takeDamage(0));
-    } else {
-      logs.push(chalk.red('방어에 실패하였습니다.'));
-      logs.push(player.takeDamage(monster.damage));
-    }
-
-    return logs;
   }
 
   // 도망

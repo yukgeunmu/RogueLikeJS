@@ -39,7 +39,7 @@ export class InputManager {
     }
   }
   // 배틀 인풋
-  static async battleUserInput(stage, player, monsters, skills) {
+  static async battleUserInput(stage, player, monsters, skills, dieMonsters) {
     let logs = [];
     let isResult = false;
 
@@ -70,6 +70,7 @@ export class InputManager {
       switch (choice) {
         case '1':
           BattleManager.BasicAttack(player, monsters, logs);
+          endPlay(player, monsters, logs);
           break;
         case '2':
           let [str, isRun] = BattleManager.Run();
@@ -85,23 +86,20 @@ export class InputManager {
           break;
         case '3':
           BattleManager.DoubleAttack(player, monsters, logs);
+          endPlay(player, monsters, logs);
           break;
         case '4':
           BattleManager.SkillUse(player, monsters, skills, logs);
+          endPlay(player, monsters, logs);
           break;
         default:
           logs.push(chalk.red('올바른 선택을 하세요.'));
           break;
       }
 
-      player.endTurn(logs);
-
-      for (let i = 0; i < monsters.length; i++) {
-        monsters[i].endTurn(logs);
-      }
-
       for (let i = monsters.length - 1; i >= 0; i--) {
         if (monsters[i].hp <= 0) {
+          dieMonsters[monsters[i].name]++;
           monsters.splice(i, 1);
           AchievementCount(achievementType.kill);
         }
@@ -175,6 +173,14 @@ export class InputManager {
   }
 }
 
-function sleep(ms) {
+let sleep = function (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
+};
+
+let endPlay = function (player, monsters, logs) {
+  player.endTurn(logs);
+
+  for (let i = 0; i < monsters.length; i++) {
+    monsters[i].endTurn(logs);
+  }
+};

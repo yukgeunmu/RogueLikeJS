@@ -23,6 +23,7 @@ export class BaseStat {
 
   set hp(value) {
     if (value <= 0) this._hp = 0;
+    else if(value >= this.maxHp) this._hp = this.maxHp;
     else this._hp = value;
   }
 
@@ -43,11 +44,11 @@ export class BaseStat {
     else this._defence = value;
   }
 
-  get Agility() {
+  get agility() {
     return this._agility;
   }
 
-  set Agility(value) {
+  set agility(value) {
     if (value >= 80) this._agility = 80;
     else this._agility = value;
   }

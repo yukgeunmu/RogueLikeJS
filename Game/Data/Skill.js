@@ -12,6 +12,7 @@ export class Skill {
     this._maxUses = data.maxUses;
     this._description = data.description;
     this.InitDuration = data.duration;
+    this.InitMaxUses = data.maxUses;
 
     const SkillClass = skillStrategies[this._classType];
 
@@ -22,18 +23,6 @@ export class Skill {
     } else {
       this.usingSkill = new SkillClass();
     }
-
-    this.skillData = {
-      id: this.id,
-      name: this.name,
-      type: this.type,
-      classType: this.classType,
-      baseValue: this.baseValue,
-      duration: this.duration,
-      maxUses: this.maxUses,
-      description: this.description,
-    };
-
   }
 
   get id() {
@@ -87,22 +76,16 @@ export class Skill {
   }
 
   useSkill(caster, target) {
-    if(this.maxUses <= 0) return chalk.red(`사용횟수를 초과하였습니다.`);
-    
-    let log = this.usingSkill.execute(caster, target, this.skillData);
+    if (this.maxUses <= 0) return chalk.red(`사용횟수를 초과하였습니다.`);
+
+    let log = this.usingSkill.execute(caster, target, this);
     this.maxUses--;
 
-    switch(this.type){
-      case 'buff':
-        caster.buffs.push(this);
-        break;
-      case 'debuff':
-        target.deBuffs.push(this);
-        break;
-      default:
-        break;
-    }
-
     return log;
+  }
+
+  Init() {
+    this.duration = this.InitDuration;
+    this.maxUses = this.InitMaxUses;
   }
 }
