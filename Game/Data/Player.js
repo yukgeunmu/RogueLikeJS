@@ -21,13 +21,21 @@ export class Player extends BaseStat {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
     if (randomInit < this._agility) {
-      return chalk.green(
-        `${monster.name}의 공격을 회피했습니다.(남은체력: ${this._hp})`
+      return (
+        chalk.redBright(`${monster.name}`) +
+        chalk.whiteBright(`의 공격을 회피했습니다.`) +
+        chalk.greenBright(`(남은체력: ${this._hp})`)
       );
     } else {
       this.hp -= resultDamage;
-      return chalk.green(
-        `플레이어가 ${monster.name}에게 ${resultDamage}의 데미지를 받았습니다.(남은체력: ${this._hp})`
+      return (
+        chalk.greenBright(`플레이어`) +
+        chalk.whiteBright(`(이)가 `) +
+        chalk.redBright(`${monster.name}`) +
+        chalk.whiteBright(`에게 `) +
+        chalk.redBright(`${resultDamage}`) +
+        chalk.whiteBright(`의 데미지를 받았습니다.`) +
+        chalk.greenBright(`(남은체력: ${this._hp})`)
       );
     }
   }

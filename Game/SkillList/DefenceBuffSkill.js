@@ -15,16 +15,16 @@ export class DefenceBuffSkill extends SkillStrategy {
       skillData.duration = skillData.InitDuration;
     }
 
-    return chalk.green(`${caster.name}의 방어력이 ${value} 만큼 상승했습니다.`);
+    return chalk.greenBright(`${caster.name}의 방어력이 ${value} 만큼 상승했습니다.`);
   }
 
   apply(target, skillData) {
-    return chalk.redBright(`방어 버프가 ${skillData.duration}턴 남았습니다.`);
+    return chalk.gray(`방어 버프가 ${skillData.duration}턴 남았습니다.`);
   }
 
   remove(target, skillData) {
     target.defence -= skillData.appliedValue;
-    return chalk.green(`방어력 버프가 종료되었습니다.`);
+    return chalk.yellowBright(`방어력 버프가 종료되었습니다.`);
   }
 
   getEffectDescription(skillData, stage) {

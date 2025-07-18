@@ -17,15 +17,22 @@ export class Monster extends BaseStat {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
     if (randomInit < this._agility) {
-      return chalk.red(
-        `플레이어의 공격을 회피했습니다.(남은체력: ${this._hp})`
+      return (
+        chalk.redBright(`${this.name}`) +
+        chalk.whiteBright(`(이)가`) +
+        chalk.greenBright(` 플레이어`) +
+        chalk.whiteBright(`의 공격을 회피했습니다.`) +
+        chalk.redBright(`(남은체력: ${this._hp})`)
       );
     } else {
       this.hp -= resultDamage;
-      return chalk.red(
-        `${this.name}가 ${resultDamage}의 데미지를 받았습니다.(남은체력: ${this._hp})`
+      return (
+        chalk.red(`${this.name}`) +
+        chalk.whiteBright(`(이)가 `) +
+        chalk.greenBright(`${resultDamage}`) +
+        chalk.whiteBright(`의 데미지를 받았습니다.`) +
+        chalk.redBright(`(남은체력: ${this._hp})`)
       );
     }
   }
-
 }

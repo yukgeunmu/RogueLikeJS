@@ -15,16 +15,16 @@ export class AgilityBuffSkill extends SkillStrategy {
       skillData.duration = skillData.InitDuration;
     }
 
-    return chalk.yellow(`${caster.name}의 민첩이 ${value}만큼 증가합니다.`);
+    return chalk.greenBright(`${caster.name}의 민첩이 ${value}만큼 증가합니다.`);
   }
 
   apply(target, skillData) {
-    return chalk.redBright(`민첩 버프가 ${skillData.duration}턴 남았습니다.`);
+    return chalk.gray(`민첩 버프가 ${skillData.duration}턴 남았습니다.`);
   }
 
   remove(target, skillData) {
     target.agility -= skillData.appliedValue;
-    return chalk.green(`민첩 버프가 종료되었습니다.`);
+    return chalk.yellowBright(`민첩 버프가 종료되었습니다.`);
   }
 
   getEffectDescription(skillData, stage) {

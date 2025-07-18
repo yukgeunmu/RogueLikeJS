@@ -14,21 +14,21 @@ export class PoisonDeBuffSkill extends SkillStrategy {
     } else {
       skillData.duration = skillData.InitDuration;
     }
-
+    chalk.hex(`#8a2b32`);
     return chalk.hex('#8A2BE2')(
-      `독에 감염되어 ${target.name}이 ${value}의 독 데미지를 입습니다.`
+      `독에 감염되어 ${target.name}(이)가 ${value}의 독 데미지를 입습니다.`
     );
   }
 
   apply(target, skillData) {
     target.hp -= skillData.appliedValue;
     return chalk.hex('#8A2BE2')(
-      `${target.name}이 ${skillData.appliedValue}의 독 데미지를 입습니다.(남은 턴: ${skillData.duration})`
+      `${target.name}(이)가 ${skillData.appliedValue}의 독 데미지를 입습니다.(남은 턴: ${skillData.duration})`
     );
   }
 
   remove(target, skillData) {
-    return chalk.hex('#8A2BE2')(`${target.name}의 독 효과가 사라졌습니다.`);
+    return chalk.yellowBright(`${target.name}의 독 효과가 사라졌습니다.`);
   }
 
   getEffectDescription(skillData, stage) {

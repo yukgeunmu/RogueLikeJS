@@ -15,7 +15,7 @@ export class FireBreathSkill extends SkillStrategy {
       skillData.duration = skillData.InitDuration;
     }
 
-    return chalk.red(
+    return chalk.magentaBright(
       `${caster.name}이(가) 화염 숨결을 내뿜어 ${target.name}에게 ${damage * 2}의 화염 데미지를 입혔습니다.`
     );
   }
@@ -23,14 +23,14 @@ export class FireBreathSkill extends SkillStrategy {
   // 지속 데미지 로직 (필요하다면 apply 메서드 구현)
   apply(target, skillData) {
     target.hp -= skillData.appliedValue;
-    return chalk.red(
+    return chalk.magentaBright(
       `${target.name}이(가) 화상으로 ${skillData.appliedValue}의 데미지를 입습니다.(남은 턴:${skillData.duration})`
     );
   }
 
   // remove 로직 (지속 데미지가 끝날 때)
   remove(target, skillData) {
-    return chalk.red(`${target.name}의 화상 효과가 사라졌습니다.`);
+    return chalk.magentaBright(`${target.name}의 화상 효과가 사라졌습니다.`);
   }
 
   getEffectDescription(skillData, stage) {

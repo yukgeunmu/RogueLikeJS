@@ -20,12 +20,12 @@ export class SummonUndeadSkill extends SkillStrategy {
 
     if (monsters.length < 4) {
       monsters.push(Zombie);
-      return chalk.gray(`${caster.name}이(가) 언데드 하수인을 소환합니다!`);
+      return chalk.magentaBright(`${caster.name}이(가) 언데드 하수인을 소환합니다!`);
     } else {
       const value = skillData.calculateValue(stage);
       monsters.pop();
       caster.hp += value;
-      return chalk.magenta(
+      return chalk.magentaBright(
         `${caster.name}이(가) 하수인을 흡수해서 체력을 ${value} 회복합니다.`
       );
     }

@@ -107,6 +107,11 @@ export class InputManager {
       if (monsters.length <= 0) {
         break;
       }
+
+      if (player.hp <= 0) {
+        logs.forEach((log) => console.log(log));
+        readlineSync.question(chalk.gray('Continue...'));
+      }
     }
   }
 

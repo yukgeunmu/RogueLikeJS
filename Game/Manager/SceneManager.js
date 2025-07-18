@@ -60,7 +60,10 @@ export class SceneManager {
       const dmg = `DMG: ${monsters[i].damage}`.padEnd(10);
       const def = `DFS: ${monsters[i].defence}`.padEnd(10);
 
-      console.log(chalk.redBright(`${name} | ${hp} ${dmg} ${def} |`));
+      console.log(
+        chalk.redBright(`${name} `) +
+          chalk.whiteBright(`| ${hp} ${dmg} ${def} |`)
+      );
     }
   }
 
@@ -127,6 +130,7 @@ export class SceneManager {
   // 승리 후 보상 창
   static displayReward(player, stage) {
     console.clear();
+    player.InitData();
     console.log(chalk.magentaBright(`\n=== Current Status ===`));
     SceneManager.displayPlayerStatus(player);
     console.log(chalk.magentaBright(`=====================\n`));
@@ -187,7 +191,8 @@ export class SceneManager {
       const def = `DFS: ${monsters[i].defence}`.padEnd(10);
 
       console.log(
-        chalk.redBright(`[${i + 1}] ${name} | ${hp} ${dmg} ${def} |`)
+        chalk.redBright(`[${i + 1}] ${name} `) +
+          chalk.whiteBright(`| ${hp} ${dmg} ${def} |`)
       );
     }
 
