@@ -203,7 +203,7 @@ export class SceneManager {
   }
 
   // 사용할 스킬 선택
-  static displaySkillList(skills) {
+  static displaySkillList(skills, stage) {
     console.clear();
 
     const line = chalk.magentaBright('='.repeat(50));
@@ -220,6 +220,7 @@ export class SceneManager {
         chalk.blue(`${i + 1}. `) +
           chalk.greenBright(`${skillname}`) +
           chalk.white(`${skilldescription}`) +
+          skills[i].getEffectDescription(stage) +
           chalk.blueBright(` (남은 횟수: ${skills[i].maxUses})`)
       );
     }
@@ -241,9 +242,20 @@ export class SceneManager {
     );
   }
 
-  // 플레이어 배틀 결과 창
+  // 플레이어 승리 결과 창
   static displayBattleResultPlayer(player, stage, dieMonsters) {
     console.clear();
+
+    console.log(
+      chalk.greenBright(
+        figlet.textSync('YOU WIN', {
+          font: 'Standard',
+          horizontalLayout: 'default',
+          verticalLayout: 'default',
+        })
+      )
+    );
+
     console.log(chalk.green('승리하였습니다.'));
     console.log(
       chalk.blueBright(`클리어 스테이지: `) + chalk.green(`Stage ${stage}`)
@@ -255,27 +267,34 @@ export class SceneManager {
     );
     console.log(`남은 스테이지: ${99 - stage}`);
     console.log(chalk.greenBright(`남은 체력: ${player.hp}`));
-    console.log(chalk.magentaBright(`======== 처치한 몬스터 ========`));
-    console.log(
-      chalk.blue('고블린: ') + chalk.yellowBright(dieMonsters['Goblin'])
-    );
-    console.log(
-      chalk.blue('스켈레톤: ') + chalk.yellowBright(dieMonsters['Skeleton'])
-    );
-    console.log(chalk.blue('오크: ') + chalk.yellowBright(dieMonsters['Orc']));
-    console.log(
-      chalk.blue('오우거: ') + chalk.yellowBright(dieMonsters['Orge'])
-    );
-    console.log(chalk.magentaBright(`=============================`));
+
+    this.ResultKillWindow(dieMonsters);
   }
 
+  // 패배 창
   static displayDefeat(stage, dieMonsters) {
     console.clear();
-    console.log(chalk.red('사망하였습니다.'));
+
     console.log(
-      chalk.blueBright(`도달한 스테이지: `) + chalk.green(`Stage ${stage}`)
+      chalk.redBright(
+        figlet.textSync('YOU DIE', {
+          font: 'Standard',
+          horizontalLayout: 'default',
+          verticalLayout: 'default',
+        })
+      )
     );
-    console.log(`남은 스테이지: ${99 - stage}`);
+
+    console.log(chalk.redBright('사망하였습니다.'));
+    console.log(
+      chalk.red(`도달한 스테이지: `) + chalk.redBright(`Stage ${stage}`)
+    );
+    console.log(`남은 스테이지: ${100 - stage}`);
+
+    this.ResultKillWindow(dieMonsters);
+  }
+
+  static ResultKillWindow = (dieMonsters) => {
     console.log(chalk.magentaBright(`======== 처치한 몬스터 ========`));
     console.log(
       chalk.blue('고블린: ') + chalk.yellowBright(dieMonsters['Goblin'])
@@ -287,6 +306,19 @@ export class SceneManager {
     console.log(
       chalk.blue('오우거: ') + chalk.yellowBright(dieMonsters['Orge'])
     );
+    console.log(chalk.magentaBright(`======== 보스 몬스터 =========`));
+    console.log(
+      chalk.blue('드래곤: ') + chalk.yellowBright(dieMonsters['Dragon'])
+    );
+    console.log(
+      chalk.blue('다크나이트: ') + chalk.yellowBright(dieMonsters['DarkKnight'])
+    );
+    console.log(
+      chalk.blue('리치킹: ') + chalk.yellowBright(dieMonsters['LichKing'])
+    );
+    console.log(
+      chalk.blue('마왕: ') + chalk.yellowBright(dieMonsters['DemonLord'])
+    );
     console.log(chalk.magentaBright(`=============================`));
-  }
+  };
 }

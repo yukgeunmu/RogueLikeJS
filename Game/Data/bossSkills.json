@@ -1,0 +1,46 @@
+[
+  {
+    "id": "boss_skill_001",
+    "name": "화염 숨결",
+    "type": "debuff",
+    "classType": "FireBreathSkill",
+    "baseValue": 50,
+    "stageCoefficient": 10,
+    "duration": 3,
+    "maxUses": 100,
+    "description": "전방의 모든 적에게 강력한 화염 데미지를 입히고, 3턴간 지속적인 화상 데미지를 준다."
+  },
+  {
+    "id": "boss_skill_002",
+    "name": "어둠의 참격",
+    "type": "attack",
+    "classType": "DarkSlashSkill",
+    "baseValue": 150,
+    "stageCoefficient": 15,
+    "duration": 0,
+    "maxUses": 100,
+    "description": "단일 대상에게 방어력을 무시하는 강력한 참격을 가한다."
+  },
+  {
+    "id": "boss_skill_003",
+    "name": "언데드 소환",
+    "type": "summon",
+    "classType": "SummonUndeadSkill",
+    "baseValue": 100,
+    "stageCoefficient": 0,
+    "duration": 0,
+    "maxUses": 100,
+    "description": "약한 언데드 하수인을 소환하여 전투를 돕게 한다."
+  },
+  {
+    "id": "boss_skill_004",
+    "name": "대격변",
+    "type": "debuff",
+    "classType": "CataclysmSkill",
+    "baseValue": 200,
+    "stageCoefficient": 20,
+    "duration": 2,
+    "maxUses": 100,
+    "description": "세상을 뒤흔드는 강력한 마법으로 모든 적에게 막대한 피해를 입히고, 2턴간 공격력을 감소시킨다."
+  }
+]

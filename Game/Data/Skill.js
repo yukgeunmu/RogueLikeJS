@@ -8,6 +8,7 @@ export class Skill {
     this._type = data.type;
     this._classType = data.classType;
     this._baseValue = data.baseValue;
+    this._stageCoefficient = data.stageCoefficient;
     this._duration = data.duration;
     this._maxUses = data.maxUses;
     this._description = data.description;
@@ -75,13 +76,25 @@ export class Skill {
     this._description = value;
   }
 
-  useSkill(caster, target) {
+  get stageCoefficient(){
+    return this._stageCoefficient;
+  }
+
+  calculateValue(stage) {
+    return this.baseValue + this._stageCoefficient * (stage - 1);
+  }
+
+  useSkill(caster, target, stage, monsters) {
     if (this.maxUses <= 0) return chalk.red(`사용횟수를 초과하였습니다.`);
 
-    let log = this.usingSkill.execute(caster, target, this);
+    let log = this.usingSkill.execute(caster, target, this, stage, monsters);
     this.maxUses--;
 
     return log;
+  }
+
+  getEffectDescription(stage){
+    return this.usingSkill.getEffectDescription(this, stage)
   }
 
   Init() {

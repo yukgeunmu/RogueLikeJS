@@ -1,15 +1,14 @@
 import { BaseStat } from './BaseStat.js';
 import chalk from 'chalk';
+import readlineSync from 'readline-sync';
 
 export class Player extends BaseStat {
-  constructor(name, hp, maxHp, damage, defence, agility) {
-    super(name, hp, maxHp, damage, defence, agility);
-    this.buffs = [];
-    this.deBuffs = [];
+  constructor(name, hp, damage, defence, agility) {
+    super(name, hp, damage, defence, agility);
     this.curDefence = defence;
     this.curDamage = damage;
     this.curAgility = agility;
-    this.curMaxHp = maxHp;
+    this.curMaxHp = this.maxHp;
   }
 
   takeDamage(monster) {
@@ -48,20 +47,5 @@ export class Player extends BaseStat {
     this.maxHp = this.curMaxHp;
     this.defence = this.curDefence;
     this.agility = this.curAgility;
-  }
-
-  startTurn() {}
-
-  endTurn(logs) {
-    if (this.buffs.length === 0) return;
-
-    for (let i = this.buffs.length - 1; i >= 0; i--) {
-      this.buffs[i].duration--;
-      if (this.buffs[i].duration <= 0) {
-        logs.push(this.buffs[i].usingSkill.remove(this, this.buffs[i]));
-        this.buffs[i].duration = this.buffs[i].IntiDuration;
-        this.buffs.splice(i, 1);
-      }
-    }
   }
 }

@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 const connect = async () => {
   await mongoose
     .connect(
-      'mongodb+srv://ygm:sdsd0615@cluster0.kyecccq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+      'mongodb+srv://여기에몽고DB 아이디랑 비번 입력',
       {
         dbName: 'RogukikeGame', // spa_mall 데이터베이스명을 사용합니다.
       },

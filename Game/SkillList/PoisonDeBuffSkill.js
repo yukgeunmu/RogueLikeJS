@@ -1,28 +1,41 @@
 import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
+import readlineSync from 'readline-sync';
 
 export class PoisonDeBuffSkill extends SkillStrategy {
-  execute(caster, target, skillData) {
-    if (target.deBuffs.length !== 0) {
-      for (let i = target.deBuffs.length - 1; i >= 0; i--) {
-        if (target.deBuffs[i].classType === skillData.classType) {
-          target.deBuffs[i].duration = skillData.InitDuration;
-          return chalk.green(`${target.name}이 독에 감염 되었습니다.`);
-        } else {
-        }
-      }
-    } else {
+  execute(caster, target, skillData, stage) {
+    const value = skillData.calculateValue(stage);
+    skillData.appliedValue = value;
+
+    if (!target.deBuffs.includes(skillData)) {
       target.deBuffs.push(skillData);
-      return chalk.green(`${target.name}이 독에 감염 되었습니다.`);
+    } else {
+      skillData.duration = skillData.InitDuration;
     }
+
+    return chalk.hex('#8A2BE2')(
+      `독에 감염되어 ${target.name}이 ${value}의 독 데미지를 입습니다.`
+    );
   }
 
-  remove(target, skillData) {}
-
   apply(target, skillData) {
-    target.hp -= skillData.baseValue;
-    return chalk.green(
-      `${target.name}이 ${skillData.baseValue} 독 데미지를 받았습니다.`
+    target.hp -= skillData.appliedValue;
+    return chalk.hex('#8A2BE2')(
+      `${target.name}이 ${skillData.appliedValue}의 독 데미지를 입습니다.(남은 턴: ${skillData.duration})`
     );
+  }
+
+  remove(target, skillData) {
+    return chalk.hex('#8A2BE2')(`${target.name}의 독 효과가 사라졌습니다.`);
+  }
+
+  getEffectDescription(skillData, stage) {
+    const value = skillData.calculateValue(stage);
+
+    const script = chalk.greenBright(
+      `<${skillData.duration}턴 간 ${value} 데미지>`
+    );
+
+    return script;
   }
 }

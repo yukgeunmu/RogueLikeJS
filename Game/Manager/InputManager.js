@@ -69,7 +69,7 @@ export class InputManager {
 
       switch (choice) {
         case '1':
-          BattleManager.BasicAttack(player, monsters, logs);
+          BattleManager.BasicAttack(player, monsters, stage, logs);
           endPlay(player, monsters, logs);
           break;
         case '2':
@@ -79,17 +79,15 @@ export class InputManager {
             logs.push(chalk.green(str));
           } else {
             logs.push(chalk.red(str));
-            for (let i = 0; i < monsters.length; i++) {
-              logs.push(player.takeDamage(monsters[i]));
-            }
+            BattleManager.MonsterAttack(player, monsters, stage, logs);
           }
           break;
         case '3':
-          BattleManager.DoubleAttack(player, monsters, logs);
+          BattleManager.DoubleAttack(player, monsters, stage, logs);
           endPlay(player, monsters, logs);
           break;
         case '4':
-          BattleManager.SkillUse(player, monsters, skills, logs);
+          BattleManager.SkillUse(player, monsters, skills, logs, stage);
           endPlay(player, monsters, logs);
           break;
         default:

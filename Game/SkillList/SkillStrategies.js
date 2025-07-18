@@ -4,6 +4,10 @@ import { PerfectHealSkill } from "./PerfectHealSkill.js";
 import { PoisonDeBuffSkill } from "./PoisonDeBuffSkill.js";
 import { PowerSlashSkill } from "./PowerSlashSkill.js";
 import { SmallHealSkill } from "./SmallHealSkill.js";
+import { FireBreathSkill } from "./FireBreathSkill.js";
+import { DarkSlashSkill } from "./DarkSlashSkill.js";
+import { SummonUndeadSkill } from "./SummonUndeadSkill.js";
+import { CataclysmSkill } from "./CataclysmSkill.js";
 
 const skillStrategies = {
     AgilityBuffSkill,
@@ -11,7 +15,11 @@ const skillStrategies = {
     PoisonDeBuffSkill,
     PowerSlashSkill,
     DefenceBuffSkill,
-    SmallHealSkill
+    SmallHealSkill,
+    FireBreathSkill,
+    DarkSlashSkill,
+    SummonUndeadSkill,
+    CataclysmSkill
 };
 
 export {skillStrategies};

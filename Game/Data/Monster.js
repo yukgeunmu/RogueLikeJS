@@ -2,10 +2,9 @@ import { BaseStat } from './BaseStat.js';
 import chalk from 'chalk';
 
 export class Monster extends BaseStat {
-  constructor(name, hp, maxHp, damage, defence, agility) {
-    super(name, hp, maxHp, damage, defence, agility);
-    this.buffs = [];
-    this.deBuffs = [];
+  constructor(name, hp, damage, defence, agility) {
+    super(name, hp, damage, defence, agility);
+    this.isBoss = false;
   }
 
   takeDamage(value) {
@@ -27,21 +26,4 @@ export class Monster extends BaseStat {
     }
   }
 
-  startTurn() {}
-
-  endTurn(logs) {
-    if (this.deBuffs === 0) return;
-
-    for (let i = this.deBuffs.length - 1; i >= 0; i--) {
-      this.deBuffs[i].duration--;
-      logs.push(this.deBuffs[i].usingSkill.apply(this,this.deBuffs[i]));
-      if (this.deBuffs[i].duration <= 0) {
-        this.deBuffs[i].usingSkill.remove(this, this.deBuffs[i]);
-        this.deBuffs[i].duration = this.deBuffs[i].IntiDuration;
-        this.deBuffs.splice(i, 1);
-      }
-    }
-
-    return logs;
-  }
 }

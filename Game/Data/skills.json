@@ -5,9 +5,10 @@
     "type": "attack",
     "classType": "PowerSlashSkill",
     "baseValue": 100,
+    "stageCoefficient": 10,
     "duration": 0,
     "maxUses": 2,
-    "description": "방어력을 무시한 100의 데미지를 준다."
+    "description": "방어력을 무시한 강력한 데미지를 준다."
   },
   {
     "id": "skill_002",
@@ -15,6 +16,7 @@
     "type": "support",
     "classType": "PerfectHealSkill",
     "baseValue": -1,
+    "stageCoefficient": 0,
     "duration": 0,
     "maxUses": 1,
     "description": "전체 체력을 회복한다."
@@ -25,9 +27,10 @@
     "type": "support",
     "classType": "SmallHealSkill",
     "baseValue": 20,
+    "stageCoefficient": 5,
     "duration": 0,
     "maxUses": 5,
-    "description": "20의 체력을 회복한다."
+    "description": "체력을 회복한다."
   },
   {
     "id": "skill_004",
@@ -35,9 +38,10 @@
     "type": "buff",
     "classType": "DefenceBuffSkill",
     "baseValue": 10,
+    "stageCoefficient": 2,
     "duration": 3,
     "maxUses": 5,
-    "description": "3턴간 방어력을 10 상승시킨다."
+    "description": "방어력을 상승시킨다."
   },
   {
     "id": "skill_005",
@@ -45,9 +49,10 @@
     "type": "buff",
     "classType": "AgilityBuffSkill",
     "baseValue": 15,
+    "stageCoefficient": 1,
     "duration": 2,
     "maxUses": 5,
-    "description": "2턴간 민첩을 15 상승시킨다."
+    "description": "민첩을 상승시킨다."
   },
   {
     "id": "skill_006",
@@ -55,8 +60,9 @@
     "type": "debuff",
     "classType": "PoisonDeBuffSkill",
     "baseValue": 5,
+    "stageCoefficient": 1,
     "duration": 5,
     "maxUses": 3,
-    "description": "적에게 5턴간 5의 데미지를 준다"
+    "description": "적에게 지속 데미지를 준다"
   }
 ]

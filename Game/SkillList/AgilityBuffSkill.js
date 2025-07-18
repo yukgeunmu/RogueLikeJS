@@ -2,33 +2,34 @@ import chalk from 'chalk';
 import { SkillStrategy } from './SkillStrategy.js';
 
 export class AgilityBuffSkill extends SkillStrategy {
-  execute(caster, target, skillData) {
-    if (caster.buffs.length !== 0) {
-      for (let i = caster.buffs.length - 1; i >= 0; i--) {
-        if (caster.buffs[i].classType === skillData.classType) {
-          caster.buffs[i].duration = skillData.InitDuration;
-          return chalk.green(
-            `${caster.name}의 민첩이 ${skillData.baseValue} 만큼 상승했습니다.`
-          );
-        } else {
-          caster.agility += skillData.baseValue;
-          caster.buffs.push(skillData);
-          return chalk.green(
-            `${caster.name}의 민첩이 ${skillData.baseValue} 만큼 상승했습니다.`
-          );
-        }
-      }
-    } else {
-      caster.agility += skillData.baseValue;
+  execute(caster, target, skillData, stage) {
+    const value = skillData.calculateValue(stage);
+    skillData.appliedValue = value; // Store the calculated value
+
+    if (!caster.buffs.includes(skillData)) {
+      caster.agility += value;
       caster.buffs.push(skillData);
-      return chalk.green(
-        `${caster.name}의 민첩이 ${skillData.baseValue} 만큼 상승했습니다.`
-      );
+    } else {
+      skillData.duration = skillData.InitDuration;
     }
+
+    return chalk.yellow(`${caster.name}의 민첩이 ${value}만큼 증가합니다.`);
+  }
+
+  apply(target, skillData) {
+    return chalk.redBright(`민첩 버프가 ${skillData.duration}턴 남았습니다.`);
   }
 
   remove(target, skillData) {
-    target.agility -= skillData.baseValue;
+    target.agility -= skillData.appliedValue;
     return chalk.green(`민첩 버프가 종료되었습니다.`);
+  }
+
+  getEffectDescription(skillData, stage) {
+    const value = skillData.calculateValue(stage);
+
+    const script = chalk(`<${skillData.duration}턴 간 ${value} 증가>`);
+
+    return script;
   }
 }

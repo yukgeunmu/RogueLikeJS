@@ -10,7 +10,7 @@ import { SkillManager } from './Game/Manager/SkillManager.js';
 
 export async function startGame() {
   console.clear();
-  const player = new Player('플레이어', 100, 100, 20, 5, 5);
+  const player = new Player('플레이어', 100, 20, 5, 5);
   const selectedSkills = SkillManager.skillSelect();
   const monserSelect = new Stage();
   let dieMonsters = {
@@ -18,6 +18,10 @@ export async function startGame() {
     Goblin: 0,
     Skeleton: 0,
     Orge: 0,
+    Dragon: 0,
+    DarkKnight: 0,
+    LichKing: 0,
+    DemonLord: 0
   };
   let stage = 1;
 

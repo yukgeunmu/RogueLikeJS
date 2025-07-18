@@ -5,6 +5,9 @@ import { Skill } from '../Data/Skill.js';
 const skillData = await fs.readFile('./Game/Data/skills.json', 'utf-8');
 export const skills = JSON.parse(skillData);
 
+const bossSkillData = await fs.readFile('./Game/Data/bossSkills.json', 'utf-8');
+const bossSkills = JSON.parse(bossSkillData);
+
 export class SkillManager {
   static skillSelect() {
     const picked = [];
@@ -22,4 +25,5 @@ export class SkillManager {
 
     return picked;
   }
+
 }

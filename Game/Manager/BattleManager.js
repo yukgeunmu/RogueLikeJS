@@ -4,7 +4,7 @@ import { SceneManager } from './SceneManager.js';
 
 export class BattleManager {
   // 기본공격 로직
-  static BasicAttack(player, monsters, logs) {
+  static BasicAttack(player, monsters, stage, logs) {
     SceneManager.displaySelectMonster(player, monsters);
 
     console.log(chalk.green(`당신의 선택은?`));
@@ -19,15 +19,18 @@ export class BattleManager {
 
     logs.push(selectedMonster.takeDamage(player.damage));
 
-    for (let i = 1; i <= monsters.length; i++) {
-      logs.push(player.takeDamage(monsters[i - 1]));
-    }
+    BattleManager.MonsterAttack(player, monsters, stage, logs);
+
+    // for (let i = 1; i <= monsters.length; i++) {
+    //   if (monsters[i - 1].hp <= 0) continue;
+    //   logs.push(player.takeDamage(monsters[i - 1]));
+    // }
 
     return logs;
   }
 
   // 연속 공격 로직
-  static DoubleAttack(player, monsters, logs) {
+  static DoubleAttack(player, monsters, stage, logs) {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
     if (randomInit <= 25) {
@@ -38,21 +41,18 @@ export class BattleManager {
       }
     } else {
       logs.push(chalk.red('연속 공격에 실패하였습니다.'));
-      for (let i = 0; i < monsters.length; i++) {
-        logs.push(player.takeDamage(monsters[i]));
-      }
+      BattleManager.MonsterAttack(player, monsters, stage, logs);
     }
-
     return logs;
   }
 
   // 스킬 로직
-  static SkillUse(player, monsters, skills, logs) {
+  static SkillUse(player, monsters, skills, logs, stage) {
     logs.length = 0;
     let selectedSkill;
 
     while (true) {
-      SceneManager.displaySkillList(skills);
+      SceneManager.displaySkillList(skills, stage);
       logs.forEach((log) => console.log(log));
 
       console.log(chalk.green(`당신의 선택은?`));
@@ -61,9 +61,11 @@ export class BattleManager {
       if (parseInt(choice) >= 1 && parseInt(choice) <= skills.length) {
         selectedSkill = skills[choice - 1];
 
-        if(selectedSkill.maxUses <= 0){
+        if (selectedSkill.maxUses <= 0) {
           logs.length = 0;
-          logs.push(chalk.red(`${selectedSkill.name}의 사용횟수를 초과하였습니다.`));
+          logs.push(
+            chalk.red(`${selectedSkill.name}의 사용횟수를 초과하였습니다.`)
+          );
         } else break;
       }
 
@@ -78,11 +80,10 @@ export class BattleManager {
     }
 
     if (selectedSkill.type === 'support' || selectedSkill.type === 'buff') {
-      logs.push(selectedSkill.useSkill(player, player));
+      logs.push(selectedSkill.useSkill(player, player, stage));
 
-      for (let i = 1; i <= monsters.length; i++) {
-        logs.push(player.takeDamage(monsters[i - 1]));
-      }
+      BattleManager.MonsterAttack(player, monsters, stage, logs);
+
       return logs;
     }
 
@@ -97,10 +98,10 @@ export class BattleManager {
       let selectedMonster = monsters[choice2 - 1];
 
       if (parseInt(choice2) >= 1 && parseInt(choice2) <= monsters.length) {
-        logs.push(selectedSkill.useSkill(player, selectedMonster));
-        for (let i = 1; i <= monsters.length; i++) {
-          logs.push(player.takeDamage(monsters[i - 1]));
-        }
+        logs.push(selectedSkill.useSkill(player, selectedMonster, stage));
+
+        BattleManager.MonsterAttack(player, monsters, stage, logs);
+
         return logs;
       }
 
@@ -129,5 +130,23 @@ export class BattleManager {
     }
 
     return [string, isRun];
+  }
+
+  static MonsterAttack(player, monsters, stage, logs) {
+    for (let i = 0; i < monsters.length; i++) {
+      if (monsters[i].hp <= 0) continue;
+
+      if (!monsters[i].isBoss) {
+        logs.push(player.takeDamage(monsters[i]));
+      } else {
+        let randomInit = parseInt(Math.random() * 100) + 1;
+
+        if (randomInit >= 70) {
+          logs.push(monsters[i].useBossSkill(player, stage, monsters));
+        } else {
+          logs.push(player.takeDamage(monsters[i]));
+        }
+      }
+    }
   }
 }
