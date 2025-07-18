@@ -68,7 +68,7 @@ RogueLikeJS/
 │   └── crud.js           # 데이터베이스 CRUD 작업
 ├── routes/               # API 라우팅
 ├── schemas/              # MongoDB 스키마 정의
-├── game.js               # 게임 시작점 (CLI)
-├── server.js             # 서버 시작점
+├── game.js               # 전투 시작점 (CLI)
+├── server.js             # 게임 시작점
 └── package.json          # 프로젝트 정보 및 의존성
 ```
