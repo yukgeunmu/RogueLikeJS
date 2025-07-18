@@ -294,6 +294,7 @@ export class SceneManager {
     this.ResultKillWindow(dieMonsters);
   }
 
+  // 잡은 몬스터 보여주는 창
   static ResultKillWindow = (dieMonsters) => {
     console.log(chalk.magentaBright(`======== 처치한 몬스터 ========`));
     console.log(

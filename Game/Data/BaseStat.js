@@ -57,40 +57,13 @@ export class BaseStat {
 
   startTurn() {}
 
+  //전투 끝난 후 플레이어와 몬스터 버프/디버프 턴 수 확인
   endTurn(logs) {
 
     this.buffsSearch(this, this.buffs, logs);
     this.buffsSearch(this, this.deBuffs, logs);
 
     return logs;
-
-    // if (this.buffs.length !== 0) {
-    //   for (let i = this.buffs.length - 1; i >= 0; i--) {
-    //     this.buffs[i].duration--;
-    //     const buffSkill = this.buffs[i];
-    //     if (this.buffs[i].duration > 0)
-    //       logs.push(buffSkill.usingSkill.apply(this, buffSkill));
-    //     if (this.buffs[i].duration <= 0) {
-    //       logs.push(this.buffs[i].usingSkill.remove(this, this.buffs[i]));
-    //       this.buffs[i].duration = this.buffs[i].InitDuration;
-    //       this.buffs.splice(i, 1);
-    //     }
-    //   }
-    // }
-
-    // if (this.deBuffs.length !== 0) {
-    //   for (let i = this.deBuffs.length - 1; i >= 0; i--) {
-    //     this.deBuffs[i].duration--;
-    //     const debuffSkill = this.deBuffs[i];
-    //     if (this.deBuffs[i].duration > 0)
-    //       logs.push(debuffSkill.usingSkill.apply(this, debuffSkill));
-    //     if (this.deBuffs[i].duration <= 0) {
-    //       logs.push(this.deBuffs[i].usingSkill.remove(this, this.deBuffs[i]));
-    //       this.deBuffs[i].duration = this.deBuffs[i].InitDuration;
-    //       this.deBuffs.splice(i, 1);
-    //     }
-    //   }
-    // }
   }
 
   buffsSearch = (target, targetBuffs, logs) => {

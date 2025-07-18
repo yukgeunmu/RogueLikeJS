@@ -1,6 +1,7 @@
 import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 
+// 플레이어 풀피 스킬
 export class PerfectHealSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     target.hp = target.maxHp;

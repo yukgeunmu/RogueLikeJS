@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import { SceneManager } from './SceneManager.js';
 
+// 전투 관련 담당하는 배틀매니저
 export class BattleManager {
   // 기본공격 로직
   static BasicAttack(player, monsters, stage, logs) {
@@ -20,11 +21,6 @@ export class BattleManager {
     logs.push(selectedMonster.takeDamage(player.damage));
 
     BattleManager.MonsterAttack(player, monsters, stage, logs);
-
-    // for (let i = 1; i <= monsters.length; i++) {
-    //   if (monsters[i - 1].hp <= 0) continue;
-    //   logs.push(player.takeDamage(monsters[i - 1]));
-    // }
 
     return logs;
   }
@@ -46,7 +42,7 @@ export class BattleManager {
     return logs;
   }
 
-  // 스킬 로직
+  // 플레이어 스킬 사용 로직
   static SkillUse(player, monsters, skills, logs, stage) {
     logs.length = 0;
     let selectedSkill;
@@ -116,7 +112,7 @@ export class BattleManager {
     }
   }
 
-  // 도망
+  // 도망 로직
   static Run() {
     let randomInit = parseInt(Math.random() * 100) + 1;
     let string;
@@ -132,6 +128,7 @@ export class BattleManager {
     return [string, isRun];
   }
 
+  // 몬스터 공격 로직
   static MonsterAttack(player, monsters, stage, logs) {
     for (let i = 0; i < monsters.length; i++) {
       if (monsters[i].hp <= 0) continue;

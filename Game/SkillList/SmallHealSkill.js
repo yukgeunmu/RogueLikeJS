@@ -1,6 +1,7 @@
 import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 
+// 플레이어 스몰힐 스킬
 export class SmallHealSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     const value = skillData.calculateValue(stage);

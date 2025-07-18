@@ -1,12 +1,14 @@
 import { BaseStat } from './BaseStat.js';
 import chalk from 'chalk';
 
+// 몬스터 클래스
 export class Monster extends BaseStat {
   constructor(name, hp, damage, defence, agility) {
     super(name, hp, damage, defence, agility);
     this.isBoss = false;
   }
 
+  // 몬스터 데미지 받는 로직
   takeDamage(value) {
     let calculateDamge = value - this._defence;
 

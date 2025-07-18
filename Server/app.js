@@ -2,6 +2,7 @@ import express from 'express';
 import achivementRouter from '../routes/achivementRoute.js';
 import connect from '../schemas/index.js';
 
+// 서버 포토 개방 및 몽고DB 연결
 const startServer = () => {
   return new Promise(async (resolve, reject) => {
     const app = express();

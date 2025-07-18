@@ -6,7 +6,7 @@
     "type": "kill_monster",
     "target": 10,
     "isTrue": false,
-    "progress": 4
+    "progress": 8
   },
   {
     "id": 2,
@@ -14,8 +14,8 @@
     "description": "스테이지 5 도달",
     "type": "reach_stage",
     "target": 5,
-    "isTrue": false,
-    "progress": 1
+    "isTrue": true,
+    "progress": 5
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "type": "reach_stage",
     "target": 10,
     "isTrue": false,
-    "progress": 1
+    "progress": 6
   },
   {
     "id": 4,
@@ -33,7 +33,7 @@
     "type": "kill_monster",
     "target": 100,
     "isTrue": false,
-    "progress": 4
+    "progress": 8
   },
   {
     "id": 5,

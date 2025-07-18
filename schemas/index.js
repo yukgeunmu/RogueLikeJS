@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose';
 
+// 몽고DB 연결
 const connect = async () => {
   await mongoose
     .connect(

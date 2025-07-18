@@ -1,7 +1,8 @@
 import axios from 'axios';
-import startServer from './app.js';
-import { achievements, LoadData } from '../Game/Achivement/AchivementList.js';
 
+//콘솔 창에서 업적데이터 몽고 DB와 읽기,쓰기,삭제 시켜주는 메서드 모아둔 js
+
+// 업적데이터 서버에 생성
 export async function createAchivement(achivement) {
   try {
     const res = await axios.post(
@@ -48,13 +49,3 @@ export async function deleteAchievement(achievement) {
     console.error('업적 삭제 실패:', err.response?.data || err.message);
   }
 }
-
-// await startServer();
-
-// for (let i = 0; i < achievements.length; i++) {
-//   await createAchievement(achievements[i]);
-// }
-
-// for (let i = 0; i < achievements.length; i++) {
-//   await deleteAchievement(achievements[i]);
-// }

@@ -1,3 +1,5 @@
+
+// 프로젝트에서 쓰는 Enum 모음
 export const achievementType = Object.freeze({
   kill: 'kill_monster',
   reach: 'reach_stage',

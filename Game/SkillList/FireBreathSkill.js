@@ -1,6 +1,8 @@
 import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 
+
+// 드래곤 스킬
 export class FireBreathSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     const damage = skillData.calculateValue(stage);

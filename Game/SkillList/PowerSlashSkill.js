@@ -1,6 +1,8 @@
 import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 
+
+// 플레이어 파워 슬래시 스킬
 export class PowerSlashSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     const damage = skillData.calculateValue(stage);

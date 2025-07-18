@@ -2,6 +2,8 @@ import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 import { Monster } from '../Data/Monster.js';
 
+
+// 리키킹 소환 스킬
 export class SummonUndeadSkill extends SkillStrategy {
   execute(caster, target, skillData, stage, monsters) {
     // 하수인 소환 로직은 BattleManager나 Stage에서 처리해야 합니다.

@@ -8,6 +8,7 @@ export const skills = JSON.parse(skillData);
 const bossSkillData = await fs.readFile('./Game/Data/bossSkills.json', 'utf-8');
 const bossSkills = JSON.parse(bossSkillData);
 
+// 플레이어 스킬 출력해주는 스킬 매니저
 export class SkillManager {
   static skillSelect() {
     const picked = [];

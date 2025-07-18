@@ -9,6 +9,7 @@ const router = express.Router();
 //    ...
 // });
 
+// 업적 데이터를 서버에 저장
 router.post('/achivement', async (req, res, next) => {
   const { id, name, description, type, target, isTrue, progress } = req.body;
 
@@ -32,12 +33,14 @@ router.post('/achivement', async (req, res, next) => {
   return res.status(201).json({ achivements: createAchivement });
 });
 
+// 서버에 있는 업적 데이터 읽어오기
 router.get('/achivement', async (req, res, next) => {
   const list = await achivementsDB.find().sort('id').exec();
 
   return res.status(200).json({ list });
 });
 
+// 서버에 있는 업적 데이터를 업데이트
 router.patch('/achivement/:id', async (req, res) => {
   const id = parseInt(req.params.id, 10);
 
@@ -62,6 +65,8 @@ router.patch('/achivement/:id', async (req, res) => {
   return res.status(200).json({});
 });
 
+
+// 서버에 있는 업적 데이터 삭제
 router.delete('/achivement/:id', async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const deleteAchive = await achivementsDB.findOne({ id }).exec();

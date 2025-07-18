@@ -1,6 +1,7 @@
 import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 
+// 마왕 스킬
 export class CataclysmSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     const damage = skillData.calculateValue(stage);

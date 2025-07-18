@@ -1,7 +1,10 @@
 import { Monster } from './Monster.js';
 import { BossMonster } from './BossMonster.js';
 
+
+// 스테이지별 몬스터 생성해주는 스테이지 클래스
 export class Stage {
+  // 랜덤으로 몬스터와 보스몬스터를 생성
   monsterSelect(stage) {
     const name = ['Orc', 'Goblin', 'Skeleton', 'Orge'];
     const BossName = ['Dragon', 'DarkKnight', 'LichKing', 'DemonLord'];
@@ -9,6 +12,7 @@ export class Stage {
 
     let randomCount = parseInt(Math.random() * 4) + 1;
 
+    // 스테이지 10층 단위로 보스 몬스터 출현
     if (stage % 10 !== 0) {
       for (let i = 0; i < randomCount; i++) {
         let randomName = parseInt(Math.random() * 4);
@@ -28,7 +32,7 @@ export class Stage {
         monsters.push(newMonster);
       }
     } else {
-      // 보스 몬스터 스탯 배율 (조정 필요)
+      // 보스 몬스터 스탯 배율
       const BOSS_HP_MULTIPLIER = 3;
       const BOSS_DAMAGE_MULTIPLIER = 1.5;
       const BOSS_DEFENCE_MULTIPLIER = 2;

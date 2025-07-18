@@ -3,6 +3,8 @@ import fs from 'fs/promises';
 const data = await fs.readFile('./Game/Achivement/achivement.json', 'utf-8');
 export const achievements = JSON.parse(data);
 
+
+// 업적 달성 평가 로직
 export function AchievementCount(type) {
   for (const achievement of achievements) {
 

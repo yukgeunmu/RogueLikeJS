@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// 몽도DB 스키마
 const achivement = new mongoose.Schema({
   id: {
     type: Number,

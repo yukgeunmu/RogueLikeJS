@@ -1,6 +1,7 @@
 import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 
+// 다크나이트 스킬
 export class DarkSlashSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     const damage = skillData.calculateValue(stage);

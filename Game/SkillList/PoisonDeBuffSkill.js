@@ -2,6 +2,8 @@ import { SkillStrategy } from './SkillStrategy.js';
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 
+
+// 플레이어 독 단검 스킬
 export class PoisonDeBuffSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     const value = skillData.calculateValue(stage);

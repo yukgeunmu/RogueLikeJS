@@ -9,6 +9,8 @@ import { DarkSlashSkill } from "./DarkSlashSkill.js";
 import { SummonUndeadSkill } from "./SummonUndeadSkill.js";
 import { CataclysmSkill } from "./CataclysmSkill.js";
 
+
+// 모든 스킬 모아놓은 배열
 const skillStrategies = {
     AgilityBuffSkill,
     PerfectHealSkill,

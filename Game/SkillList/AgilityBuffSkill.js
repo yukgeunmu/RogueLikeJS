@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 import { SkillStrategy } from './SkillStrategy.js';
 
+
+// 민첩 증가 버프 스킬
 export class AgilityBuffSkill extends SkillStrategy {
   execute(caster, target, skillData, stage) {
     const value = skillData.calculateValue(stage);

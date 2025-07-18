@@ -67,6 +67,7 @@ export class InputManager {
         logs.push(chalk.blueBright(`${choice}를 선택하셨습니다.`));
       }
 
+      // 플레이어 전투 방법 선택
       switch (choice) {
         case '1':
           BattleManager.BasicAttack(player, monsters, stage, logs);
@@ -171,6 +172,7 @@ export class InputManager {
   }
 }
 
+// 도망 사용 시 시간 지연해주는 메서드
 let sleep = function (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
