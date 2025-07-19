@@ -9,7 +9,7 @@ export class CataclysmSkill extends SkillStrategy {
     target.hp -= damage;
 
     if (!target.deBuffs.includes(skillData)) {
-      target.damage /= 2;
+      target.damage = Math.floor(target.damage/2);
       target.deBuffs.push(skillData);
     } else {
       skillData.duration = skillData.InitDuration;
@@ -28,7 +28,7 @@ export class CataclysmSkill extends SkillStrategy {
 
   // remove 로직 (디버프가 끝날 때)
   remove(target, skillData) {
-    target.damage *= 2;
+    target.damage = target.curDamage;
     return chalk.magentaBright(`${target.name}의 공격력 감소 효과가 사라졌습니다.`);
   }
 

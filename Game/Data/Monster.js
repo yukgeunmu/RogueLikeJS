@@ -6,6 +6,7 @@ export class Monster extends BaseStat {
   constructor(name, hp, damage, defence, agility) {
     super(name, hp, damage, defence, agility);
     this.isBoss = false;
+    this.exp = 10;
   }
 
   // 몬스터 데미지 받는 로직

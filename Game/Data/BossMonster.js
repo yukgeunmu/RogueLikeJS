@@ -15,6 +15,7 @@ export class BossMonster extends Monster {
       bossSkills.find((skill) => skill.id === bossSkillId)
     );
     this.isBoss = true;
+    this.exp = 50;
   }
 
   // 보스 스킬 사용

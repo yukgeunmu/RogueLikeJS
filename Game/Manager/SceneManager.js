@@ -49,7 +49,7 @@ export class SceneManager {
     console.log(
       chalk.cyanBright(`| Stage: ${stage} `) +
         chalk.blueBright(
-          `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} AGI: ${player.agility} |`
+          `| 플레이어 정보 | Lv.${player.level}  HP: ${player.hp}  DMG: ${player.damage} DFS: ${player.defence} AGI: ${player.agility}  Exp: ${player.exp}/${player.maxExp}|`
         )
     );
     console.log(chalk.magentaBright(`=====================\n`));
@@ -242,7 +242,7 @@ export class SceneManager {
   static displayPlayerStatus(player) {
     console.log(
       chalk.blueBright(
-        `| 플레이어 정보 HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} AGI: ${player.agility} |`
+        `| 플레이어 정보 | Lv.${player.level}  HP: ${player.hp}, DMG: ${player.damage} DFS: ${player.defence} AGI: ${player.agility} |`
       )
     );
   }

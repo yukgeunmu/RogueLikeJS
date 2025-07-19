@@ -11,11 +11,10 @@ export class SummonUndeadSkill extends SkillStrategy {
     // 예: BattleManager.summonMonster(new Monster('Zombie', ...));
     let Zombie = new Monster(
       'Zombie',
-      caster.maxHp / 2,
-      caster.maxHp / 2,
-      caster.damage / 2,
-      caster.defence / 2,
-      caster.agility / 2
+      Math.floor(caster.maxHp / 2),
+      Math.floor(caster.damage / 2),
+      Math.floor(caster.defence / 2),
+      Math.floor(caster.agility / 2)
     );
 
     if (monsters.length < 4) {

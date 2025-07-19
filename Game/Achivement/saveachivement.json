@@ -5,8 +5,8 @@
     "description": "몬스터 10마리 처치",
     "type": "kill_monster",
     "target": 10,
-    "isTrue": false,
-    "progress": 8
+    "isTrue": true,
+    "progress": 10
   },
   {
     "id": 2,
@@ -23,8 +23,8 @@
     "description": "스테이지 10 도달",
     "type": "reach_stage",
     "target": 10,
-    "isTrue": false,
-    "progress": 6
+    "isTrue": true,
+    "progress": 10
   },
   {
     "id": 4,
@@ -33,7 +33,7 @@
     "type": "kill_monster",
     "target": 100,
     "isTrue": false,
-    "progress": 8
+    "progress": 26
   },
   {
     "id": 5,
@@ -69,6 +69,33 @@
     "type": "revive_count",
     "target": 10,
     "isTrue": false,
-    "progress": 1
+    "progress": 2
+  },
+  {
+    "id": 9,
+    "name": "보스 슬레이어",
+    "description": "보스 몬스터 1마리 처치",
+    "type": "kill_boss",
+    "target": 1,
+    "isTrue": false,
+    "progress": 0
+  },
+  {
+    "id": 10,
+    "name": "스킬 마스터",
+    "description": "스킬 50번 사용",
+    "type": "use_skill",
+    "target": 50,
+    "isTrue": false,
+    "progress": 27
+  },
+  {
+    "id": 11,
+    "name": "회피의 달인",
+    "description": "공격 100번 회피",
+    "type": "dodge_attack",
+    "target": 100,
+    "isTrue": false,
+    "progress": 4
   }
 ]

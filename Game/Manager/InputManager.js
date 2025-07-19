@@ -46,6 +46,7 @@ export class InputManager {
     while (player.hp > 0) {
       console.clear();
       SceneManager.displayStatus(stage, player, monsters);
+      console.log(" ");
 
       if (isResult) {
         logs.forEach((log) => console.log(log));
@@ -55,7 +56,7 @@ export class InputManager {
 
       console.log(
         chalk.green(
-          `\n1. 공격한다 2. 도망친다.(5%) 3.연속 공격(25%), 4. 스킬사용`
+          `\n1. 공격한다 2. 도망친다.(50%) 3.연속 공격(25%), 4. 스킬사용`
         )
       );
       console.log(chalk.green(`당신의 선택은?`));
@@ -77,6 +78,9 @@ export class InputManager {
           let [str, isRun] = BattleManager.Run();
           if (isRun) {
             isResult = isRun;
+            player.maxHp = Math.floor(player.maxHp/3);
+            player.curMaxHp = player.maxHp;
+            player.InitData();
             logs.push(chalk.green(str));
           } else {
             logs.push(chalk.red(str));
@@ -98,7 +102,11 @@ export class InputManager {
 
       for (let i = monsters.length - 1; i >= 0; i--) {
         if (monsters[i].hp <= 0) {
+          player.gainExp(monsters[i].exp);
           dieMonsters[monsters[i].name]++;
+          if (monsters[i].isBoss) {
+            AchievementCount(achievementType.killBoss);
+          }
           monsters.splice(i, 1);
           AchievementCount(achievementType.kill);
         }

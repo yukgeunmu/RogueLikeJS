@@ -1,6 +1,8 @@
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
 import { SceneManager } from './SceneManager.js';
+import { AchievementCount } from '../Achivement/AchivementList.js';
+import { achievementType } from '../Enum/Enums.js';
 
 // 전투 관련 담당하는 배틀매니저
 export class BattleManager {
@@ -75,6 +77,8 @@ export class BattleManager {
       }
     }
 
+    AchievementCount(achievementType.useSkill);
+
     if (selectedSkill.type === 'support' || selectedSkill.type === 'buff') {
       logs.push(selectedSkill.useSkill(player, player, stage));
 
@@ -118,7 +122,7 @@ export class BattleManager {
     let string;
     let isRun = false;
 
-    if (randomInit <= 5) {
+    if (randomInit <= 50) {
       string = '도망치는데 성공했습니다.';
       isRun = true;
     } else {

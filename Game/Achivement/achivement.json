@@ -70,5 +70,32 @@
     "target": 10,
     "isTrue": false,
     "progress": 0
+  },
+  {
+    "id": 9,
+    "name": "보스 슬레이어",
+    "description": "보스 몬스터 1마리 처치",
+    "type": "kill_boss",
+    "target": 1,
+    "isTrue": false,
+    "progress": 0
+  },
+  {
+    "id": 10,
+    "name": "스킬 마스터",
+    "description": "스킬 50번 사용",
+    "type": "use_skill",
+    "target": 50,
+    "isTrue": false,
+    "progress": 0
+  },
+  {
+    "id": 11,
+    "name": "회피의 달인",
+    "description": "공격 100번 회피",
+    "type": "dodge_attack",
+    "target": 100,
+    "isTrue": false,
+    "progress": 0
   }
 ]

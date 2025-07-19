@@ -1,6 +1,7 @@
 import { BaseStat } from './BaseStat.js';
 import chalk from 'chalk';
-import readlineSync from 'readline-sync';
+import { AchievementCount } from '../Achivement/AchivementList.js';
+import { achievementType } from '../Enum/Enums.js';
 
 // 플레이어 클래스
 export class Player extends BaseStat {
@@ -10,6 +11,10 @@ export class Player extends BaseStat {
     this.curDamage = damage;
     this.curAgility = agility;
     this.curMaxHp = this.maxHp;
+
+    this.level = 1;
+    this.exp = 0;
+    this.maxExp = 100;
   }
 
   // 플레이어 데미지 받는 로직
@@ -21,6 +26,7 @@ export class Player extends BaseStat {
     let randomInit = parseInt(Math.random() * 100) + 1;
 
     if (randomInit < this._agility) {
+      AchievementCount(achievementType.dodge);
       return (
         chalk.redBright(`${monster.name}`) +
         chalk.whiteBright(`의 공격을 회피했습니다.`) +
@@ -40,15 +46,46 @@ export class Player extends BaseStat {
     }
   }
 
-  // 레벨업
-  // LevelUp(stage) {
-  //   this.maxHp = this._maxHp + (stage - 1) + 10;
-  //   this._damage = this._damage + (stage - 1) + 10;
-  //   this._defence = this._defence + (stage - 1) + 1;
-  //   this._agility = this._agility + (stage - 1) + 1;
+  gainExp(amount) {
+    this.exp += amount;
+    console.log(chalk.yellowBright(`${amount}의 경험치를 획득했습니다. (현재 EXP: ${this.exp}/${this.maxExp})`));
 
-  //   this._hp = this._maxHp;
-  // }
+    while (this.exp >= this.maxExp) {
+      this.levelUp();
+    }
+  }
+
+  levelUp() {
+    this.exp -= this.maxExp;
+    this.level++;
+    this.maxExp = this.level * 100;
+
+    console.log(chalk.cyanBright.bold(`레벨업! Lvl ${this.level}이 되었습니다!`));
+
+    // Increase stats
+    const hpUp = 10;
+    const damageUp = 5;
+    const defenceUp = 2;
+    const agilityUp = 1;
+
+    this.maxHp += hpUp;
+    this.curMaxHp += hpUp;
+
+    this.damage += damageUp;
+    this.curDamage += damageUp;
+
+    this.defence += defenceUp;
+    this.curDefence += defenceUp;
+
+    this.agility += agilityUp;
+    this.curAgility += agilityUp;
+
+    // Heal to full
+    this.hp = this.maxHp;
+
+    // console.log(chalk.green(`최대 체력 +${hpUp}, 공격력 +${damageUp}, 방어력 +${defenceUp}, 민첩 +${agilityUp}`));
+    console.log(chalk.green(`체력을 모두 회복했습니다.`));
+  }
 
   //플레이더 전투 끝난 후 데이터 초기화 메서드
   InitData() {

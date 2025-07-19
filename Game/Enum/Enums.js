@@ -5,6 +5,9 @@ export const achievementType = Object.freeze({
   reach: 'reach_stage',
   death: 'death_count',
   revive: 'revive_count',
+  killBoss: 'kill_boss',
+  useSkill: 'use_skill',
+  dodge: 'dodge_attack',
 });
 
 export const rewardType = Object.freeze({
